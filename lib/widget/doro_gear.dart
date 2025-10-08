@@ -1,4 +1,4 @@
-import 'package:doro_gear/widget/screens/home/home_page.dart';
+import 'package:doro_gear/widget/screens/account/signin_page.dart';
 import 'package:flutter/material.dart';
 
 import 'constants/app_colors.dart';
@@ -15,7 +15,7 @@ class DoroGear extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const SignInPage(),
     );
   }
 }

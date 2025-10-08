@@ -46,25 +46,25 @@ class _BannerCarouselState extends State<BannerCarousel> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-    GestureDetector(
+  Widget build(BuildContext context) {
+    return GestureDetector(
       onPanDown: (_) => _timer?.cancel(),
       onPanEnd: (_) => _startAutoScroll(),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: EdgeInsets.symmetric(horizontal: 0),
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            _buildPageView(),
-            _buildIndicators()
+            _buildPageView(context),
+            _buildIndicators(context)
           ],
         ),
       ),
     );
+  }
 
-
-  Widget _buildPageView() =>
-    SizedBox(
+  Widget _buildPageView(BuildContext context) {
+    return SizedBox(
       height: Constants.bannerHeight,
       child: PageView.builder(
         controller: _controller,
@@ -77,19 +77,20 @@ class _BannerCarouselState extends State<BannerCarousel> {
         itemBuilder: (context, index) => BannerItem(index: index),
       ),
     );
+  }
 
-
-  Widget _buildIndicators() =>
-    Positioned(
+  Widget _buildIndicators(BuildContext context) {
+    return Positioned(
       bottom: 8,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
           Constants.bannerCount,
-              (index) => BannerIndicator(isActive: _currentBanner == index),
+          (index) => BannerIndicator(isActive: _currentBanner == index),
         ),
       ),
     );
+  }
 }
 
 class BannerItem extends StatelessWidget {
@@ -98,8 +99,8 @@ class BannerItem extends StatelessWidget {
   const BannerItem({super.key, required this.index});
 
   @override
-  Widget build(BuildContext context) =>
-    Container(
+  Widget build(BuildContext context) {
+    return Container(
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
@@ -109,7 +110,7 @@ class BannerItem extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(8),
+        //borderRadius: BorderRadius.circular(0),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -121,7 +122,7 @@ class BannerItem extends StatelessWidget {
       child: Center(
         child: Text(
           'Banner ${index + 1}',
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -129,6 +130,7 @@ class BannerItem extends StatelessWidget {
         ),
       ),
     );
+  }
 }
 
 class BannerIndicator extends StatelessWidget {
@@ -137,14 +139,15 @@ class BannerIndicator extends StatelessWidget {
   const BannerIndicator({super.key, required this.isActive});
 
   @override
-  Widget build(BuildContext context) =>
-      Container(
-        margin: const EdgeInsets.symmetric(horizontal: 4),
-        width: isActive ? 24 : 8,
-        height: 8,
-        decoration: BoxDecoration(
-          color: isActive ? Colors.white : Colors.white.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(4),
-        ),
-      );
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      width: isActive ? 24 : 8,
+      height: 8,
+      decoration: BoxDecoration(
+        color: isActive ? Colors.white : Colors.white.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(4),
+      ),
+    );
+  }
 }
