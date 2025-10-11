@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 enum ProductCategory {
   cpu(1, 'CPU - Vi xử lý'),
   mainboard(2, 'Mainboard - Bo mạch chủ'),
@@ -6,7 +9,8 @@ enum ProductCategory {
   storage(5, 'Storage- Ổ cứng'),
   psu(6, 'PSU - Nguồn máy tính'),
   cooler(7, 'Cooler - Tản nhiệt'),
-  pcCase(8, 'Case - Vỏ máy tính');
+  pcCase(8, 'Case - Vỏ máy tính'),
+  monitor(9, 'Monitor - Màn hình');
 
   final int priority;
   final String displayName;
@@ -31,26 +35,5 @@ enum ProductCategory {
     final categories = ProductCategory.values.toList();
     categories.sort((a, b) => a.compareTo(b));
     return categories;
-  }
-
-  String get iconName {
-    switch (this) {
-      case ProductCategory.cpu:
-        return 'memory';
-      case ProductCategory.gpu:
-        return 'videogame_asset';
-      case ProductCategory.mainboard:
-        return 'developer_board';
-      case ProductCategory.ram:
-        return 'storage';
-      case ProductCategory.storage:
-        return 'sd_storage';
-      case ProductCategory.psu:
-        return 'power';
-      case ProductCategory.cooler:
-        return 'ac_unit';
-      case ProductCategory.pcCase:
-        return 'computer';
-    }
   }
 }

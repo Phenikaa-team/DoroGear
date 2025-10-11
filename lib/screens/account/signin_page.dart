@@ -17,7 +17,7 @@ class _SignInPageState extends State<SignInPage> {
   bool _obscurePassword = true;
   bool _rememberMe = false;
   final TextEditingController _emailController = TextEditingController(
-      text: '12345@gmail.com');
+      text: 'user@doro.com');
   final TextEditingController _passwordController = TextEditingController();
 
   @override

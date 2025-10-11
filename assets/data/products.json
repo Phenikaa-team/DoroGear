@@ -44,6 +44,49 @@
     }
   },
   {
+    "id": "CPU-I7-13700K",
+    "name": "Intel Core i7-13700K (16 nhân 24 luồng, 5.4GHz)",
+    "category": "cpu",
+    "price": 8500000,
+    "originalPrice": 9000000,
+    "rating": 4.9,
+    "soldCount": 50,
+    "stock": 10,
+    "image": "https://product.hstatic.net/1000333506/product/19-118-414-v01_c74af1d2a2b147549aa7e0dbd6ff9aff.png",
+    "brand": "Intel",
+    "warranty": "36 tháng chính hãng",
+    "description": "CPU Intel Core i7-13700K là bộ xử lý cao cấp thuộc thế hệ Raptor Lake, mang lại hiệu suất đỉnh cao cho gaming 4K và các tác vụ sáng tạo chuyên nghiệp như chỉnh sửa video, 3D rendering.",
+    "specs": {
+      "Số nhân/luồng": "8 P-core + 8 E-core / 24 luồng",
+      "Xung nhịp tối đa": "5.4 GHz",
+      "Bộ nhớ đệm (Cache)": "30MB Intel Smart Cache",
+      "Socket": "LGA 1700",
+      "Điện năng tiêu thụ (TDP)": "125W (PL1), 253W (PL2)",
+      "Card đồ họa tích hợp": "Có (Intel UHD Graphics 770)"
+    }
+  },
+  {
+    "id": "MB-Z790-AORUS",
+    "name": "Gigabyte Z790 AORUS ELITE AX DDR5",
+    "category": "mainboard",
+    "price": 6800000,
+    "originalPrice": 7200000,
+    "rating": 4.8,
+    "soldCount": 30,
+    "stock": 8,
+    "image": "https://anphat.com.vn/media/product/44540_mainboard_gigabyte_z790m_aorus_elite_ax_ddr5__wifi_bluetooth__anphat88.jpg",
+    "brand": "Gigabyte",
+    "warranty": "36 tháng chính hãng",
+    "description": "Bo mạch chủ cao cấp Z790 hỗ trợ CPU Intel thế hệ 12/13/14, được thiết kế với VRM mạnh mẽ và hỗ trợ RAM DDR5, lý tưởng cho ép xung và các cấu hình hiệu năng cao.",
+    "specs": {
+      "Chipset": "Intel Z790",
+      "Socket": "LGA 1700",
+      "Hỗ trợ RAM": "DDR5 (Max 128GB, OC 7600MHz+)",
+      "Kích thước": "ATX",
+      "Cổng kết nối": "Wi-Fi 6E, 4 x M.2 PCIe 4.0, 2.5 GbE LAN"
+    }
+  },
+  {
     "id": "MB-B660M-DS3H",
     "name": "Gigabyte B660M DS3H DDR4",
     "category": "mainboard",
@@ -83,6 +126,27 @@
       "Hỗ trợ RAM": "DDR4 (Max 128GB, OC 4400MHz)",
       "Kích thước": "Micro ATX",
       "Tính năng nổi bật": "2.5 Gb Ethernet, M.2 Heatsink, Aura Sync RGB"
+    }
+  },
+  {
+    "id": "RAM-DDR5-32GB-6000",
+    "name": "G.SKILL Trident Z5 RGB 32GB (2x16GB) DDR5 6000MHz",
+    "category": "ram",
+    "price": 4800000,
+    "originalPrice": 5200000,
+    "rating": 5.0,
+    "soldCount": 60,
+    "stock": 15,
+    "image": "https://product.hstatic.net/200000722513/product/164206477211_6875b95d6a7846d48c41f8cfe17d7942_grande.png",
+    "brand": "G.SKILL",
+    "warranty": "Bảo hành trọn đời",
+    "description": "Bộ nhớ RAM DDR5 hiệu suất cao với thiết kế tản nhiệt nổi bật và đèn RGB rực rỡ. Tốc độ 6000MHz là điểm ngọt cho nền tảng Intel và AMD hiện đại.",
+    "specs": {
+      "Dung lượng": "32GB (2x16GB)",
+      "Loại RAM": "DDR5",
+      "Tốc độ": "6000MHz",
+      "Độ trễ": "CL30",
+      "Tính năng": "Hỗ trợ XMP 3.0, RGB Lighting"
     }
   },
   {
@@ -150,6 +214,27 @@
     }
   },
   {
+    "id": "GPU-RTX-4070-TI",
+    "name": "NVIDIA GeForce RTX 4070 Ti 12GB",
+    "category": "gpu",
+    "price": 18500000,
+    "originalPrice": 19500000,
+    "rating": 4.9,
+    "soldCount": 40,
+    "stock": 7,
+    "image": "https://asset.msi.com/resize/image/global/product/product_1672734501633e5e2445a44bac87ac9167addd009f.png62405b38c58fe0f07fcef2367d8a9ba1/1024.png",
+    "brand": "NVIDIA (ASUS/Gigabyte/MSI...)",
+    "warranty": "36 tháng chính hãng",
+    "description": "Card đồ họa cao cấp RTX 4070 Ti là sự lựa chọn hoàn hảo cho chơi game 1440p tốc độ khung hình cao và 4K ở mức cài đặt cao, với DLSS 3 và Ray Tracing mạnh mẽ.",
+    "specs": {
+      "GPU": "GeForce RTX 4070 Ti",
+      "VRAM": "12GB GDDR6X",
+      "Giao diện": "PCI Express 4.0",
+      "Nguồn đề nghị": "700W",
+      "Kết nối nguồn": "1 x 16-pin (12VHPWR)"
+    }
+  },
+  {
     "id": "GPU-RX-7600",
     "name": "AMD Radeon RX 7600 8GB",
     "category": "gpu",
@@ -192,6 +277,27 @@
     }
   },
   {
+    "id": "SSD-Crucial-P3-1TB",
+    "name": "Crucial P3 Plus 1TB PCIe Gen4 NVMe SSD",
+    "category": "storage",
+    "price": 1800000,
+    "originalPrice": 2000000,
+    "rating": 4.7,
+    "soldCount": 80,
+    "stock": 30,
+    "image": "https://lagihitech.vn/wp-content/uploads/2022/10/SSD-Crucial-P3-Plus-1TB-PCIe-4.0-3D-NAND-CT1000P3PSSD8-hinh-1.jpg",
+    "brand": "Crucial",
+    "warranty": "60 tháng chính hãng",
+    "description": "Crucial P3 Plus là ổ cứng SSD Gen 4 giá cả phải chăng, cung cấp tốc độ nhanh hơn nhiều so với Gen 3, thích hợp cho người dùng muốn nâng cấp lên PCIe 4.0 với ngân sách hợp lý.",
+    "specs": {
+      "Dung lượng": "1TB",
+      "Chuẩn giao tiếp": "NVMe PCIe 4.0 x4",
+      "Tốc độ đọc tuần tự": "Lên đến 5,000 MB/s",
+      "Tốc độ ghi tuần tự": "Lên đến 3,600 MB/s",
+      "Form Factor": "M.2 (2280)"
+    }
+  },
+  {
     "id": "SSD-KC3000-2TB",
     "name": "Kingston KC3000 NVMe 2TB Gen4",
     "category": "storage",
@@ -210,6 +316,48 @@
       "Tốc độ đọc tuần tự": "Lên đến 7,000 MB/s",
       "Tốc độ ghi tuần tự": "Lên đến 7,000 MB/s",
       "Form Factor": "M.2 (2280)"
+    }
+  },
+  {
+    "id": "HDD-WD-4TB",
+    "name": "Ổ cứng HDD Western Digital Blue 4TB 5400RPM",
+    "category": "storage",
+    "price": 2800000,
+    "originalPrice": 3000000,
+    "rating": 4.5,
+    "soldCount": 90,
+    "stock": 25,
+    "image": "https://western.com.vn/media/product/240_o_cung_wd_blue_4tb_wd40ezax_vcom.jpg",
+    "brand": "Western Digital",
+    "warranty": "24 tháng chính hãng",
+    "description": "Ổ cứng cơ HDD dung lượng lớn 4TB, lý tưởng cho việc lưu trữ dữ liệu, game, và các tập tin media. Dòng Blue của WD nổi tiếng về độ tin cậy cho máy tính để bàn.",
+    "specs": {
+      "Dung lượng": "4TB",
+      "Tốc độ vòng quay": "5400 RPM",
+      "Bộ nhớ đệm (Cache)": "256MB",
+      "Chuẩn giao tiếp": "SATA 6Gb/s",
+      "Form Factor": "3.5 inch"
+    }
+  },
+  {
+    "id": "PSU-Seasonic-850W",
+    "name": "Seasonic FOCUS GX-850 850W 80 Plus Gold Full Modular",
+    "category": "psu",
+    "price": 3200000,
+    "originalPrice": 3500000,
+    "rating": 5.0,
+    "soldCount": 45,
+    "stock": 15,
+    "image": "https://m.media-amazon.com/images/I/71bhPweONsL._UF1000,1000_QL80_.jpg",
+    "brand": "Seasonic",
+    "warranty": "10 năm chính hãng",
+    "description": "Nguồn Seasonic FOCUS GX-850 nổi tiếng với chất lượng và độ tin cậy cao, chứng nhận 80 Plus Gold và thiết kế Full Modular giúp quản lý cáp dễ dàng và tối ưu hóa luồng khí.",
+    "specs": {
+      "Công suất": "850W",
+      "Hiệu suất": "80 Plus Gold",
+      "Hệ thống cáp": "Full Modular",
+      "Kích thước quạt": "120mm Fluid Dynamic Bearing (FDB)",
+      "Tính năng nổi bật": "Kích thước nhỏ gọn, chất lượng điện áp ổn định"
     }
   },
   {
@@ -251,6 +399,27 @@
       "Hiệu suất": "80 Plus Gold",
       "Hệ thống cáp": "Full Modular",
       "Tính năng nổi bật": "Tụ điện Nhật Bản, Công nghệ 0dB"
+    }
+  },
+  {
+    "id": "CASE-CM-500",
+    "name": "Cooler Master MasterBox TD500 Mesh V2",
+    "category": "pcCase",
+    "price": 2400000,
+    "originalPrice": 2700000,
+    "rating": 4.9,
+    "soldCount": 55,
+    "stock": 12,
+    "image": "https://a.storyblok.com/f/281110/4000x4001/b1e7e4b390/td500-mesh-v2-regular-white-argb-light.png",
+    "brand": "Cooler Master",
+    "warranty": "12 tháng",
+    "description": "Vỏ case MasterBox TD500 Mesh V2 với mặt trước lưới 3D đặc trưng giúp tăng cường luồng khí và đi kèm 3 quạt ARGB, mang lại hiệu suất làm mát tuyệt vời và thẩm mỹ cao.",
+    "specs": {
+      "Form Factor Mainboard": "ATX, Micro-ATX, Mini-ITX",
+      "Chất liệu": "Thép, Lưới, Kính cường lực",
+      "Hỗ trợ tản nhiệt AIO": "Lên đến 360mm",
+      "Số lượng quạt đi kèm": "3 x 120mm ARGB (trước)",
+      "Tính năng nổi bật": "USB 3.2 Gen 2 Type C trên I/O"
     }
   },
   {
@@ -335,6 +504,136 @@
       "Socket tương thích": "Intel LGA 1700/1200/1151, AMD AM5/AM4",
       "Đèn": "ARGB trên Block và Quạt",
       "Tốc độ bơm": "3100 RPM"
+    }
+  },
+  {
+    "id": "COOLER-AIO-360",
+    "name": "NZXT Kraken 360 RGB AIO Liquid Cooler",
+    "category": "cooler",
+    "price": 4500000,
+    "originalPrice": 4800000,
+    "rating": 5.0,
+    "soldCount": 30,
+    "stock": 10,
+    "image": "https://product.hstatic.net/200000722513/product/2907_60546b84f3a92629fb6ab52fa0ce986b_aa2efcdad37944c1b0536157d919677f_ced21b7db547439baf29bfe8da3c2f49_master.jpg",
+    "brand": "NZXT",
+    "warranty": "60 tháng",
+    "description": "Tản nhiệt nước AIO 360mm cao cấp của NZXT với màn hình LCD hiển thị thông tin hệ thống hoặc ảnh GIF tùy chỉnh trên block CPU. Hiệu suất làm mát tối đa cho các CPU hàng đầu.",
+    "specs": {
+      "Loại": "Tản nhiệt nước AIO",
+      "Kích thước Radiator": "360mm",
+      "Socket tương thích": "Intel LGA 1700/1200/1151, AMD AM5/AM4",
+      "Tính năng nổi bật": "Màn hình LCD 1.54 inch, Quạt FDB tĩnh lặng"
+    }
+  },
+  {
+    "id": "MONITOR-27-165HZ",
+    "name": "Màn hình Dell G2724D 27 inch QHD 165Hz IPS",
+    "category": "monitor",
+    "price": 5800000,
+    "originalPrice": 6200000,
+    "rating": 4.8,
+    "soldCount": 70,
+    "stock": 20,
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUZPZZBEhVuQeDvQWs9giDx9aB99vgdjA7Sq6o5ycog7UaNKxx_PKXlIj7rZ8LWNYCBVA&usqp=CAU",
+    "brand": "Dell",
+    "warranty": "36 tháng chính hãng",
+    "description": "Màn hình gaming 27 inch với độ phân giải QHD và tần số quét 165Hz trên tấm nền IPS, mang lại hình ảnh sắc nét, màu sắc chính xác và trải nghiệm chơi game mượt mà.",
+    "specs": {
+      "Kích thước": "27 inch",
+      "Độ phân giải": "2560 x 1440 (QHD)",
+      "Tần số quét": "165Hz (OC 180Hz)",
+      "Tấm nền": "IPS",
+      "Thời gian phản hồi": "1ms (GtG)",
+      "Công nghệ": "HDR, AMD FreeSync Premium, NVIDIA G-SYNC Compatible"
+    }
+  },
+  {
+    "id": "MONITOR-24-144HZ",
+    "name": "Màn hình Acer Nitro VG240Y P 23.8 inch Full HD 144Hz IPS",
+    "category": "monitor",
+    "price": 3200000,
+    "originalPrice": 3500000,
+    "rating": 4.6,
+    "soldCount": 120,
+    "stock": 40,
+    "image": "https://product.hstatic.net/200000420363/product/acer-vg240y-fhd-ips-75hz_b77d6598d31d407dbec2b35ec5a3bae9_master.jpg",
+    "brand": "Acer",
+    "warranty": "36 tháng chính hãng",
+    "description": "Màn hình gaming giá rẻ với tốc độ làm mới 144Hz và thời gian phản hồi nhanh trên tấm nền IPS, mang lại trải nghiệm chơi game mượt mà và màu sắc sống động.",
+    "specs": {
+      "Kích thước": "23.8 inch",
+      "Độ phân giải": "1920 x 1080 (Full HD)",
+      "Tần số quét": "144Hz",
+      "Tấm nền": "IPS",
+      "Thời gian phản hồi": "1ms (VRB)",
+      "Công nghệ": "AMD FreeSync Premium"
+    }
+  },
+  {
+    "id": "MONITOR-32-4K",
+    "name": "Màn hình LG UltraGear 32GR93U-B 32 inch 4K 144Hz IPS",
+    "category": "monitor",
+    "price": 18000000,
+    "originalPrice": 19500000,
+    "rating": 5.0,
+    "soldCount": 15,
+    "stock": 5,
+    "image": "https://bizweb.dktcdn.net/100/329/122/products/man-hinh-4k-lg-ultragear-32-inch-ips-144hz-32gr93u-b-atv.jpg?v=1697426377320",
+    "brand": "LG",
+    "warranty": "24 tháng chính hãng",
+    "description": "Màn hình gaming 4K cao cấp, kết hợp độ phân giải siêu nét với tần số quét 144Hz và tốc độ phản hồi 1ms, mang lại hình ảnh chi tiết và mượt mà cho các game thủ chuyên nghiệp.",
+    "specs": {
+      "Kích thước": "32 inch",
+      "Độ phân giải": "3840 x 2160 (4K UHD)",
+      "Tần số quét": "144Hz",
+      "Tấm nền": "IPS",
+      "Thời gian phản hồi": "1ms (GtG)",
+      "Công nghệ": "VESA DisplayHDR 400, NVIDIA G-SYNC Compatible, AMD FreeSync Premium Pro"
+    }
+  },
+  {
+    "id": "MONITOR-27-4K-PRO",
+    "name": "Màn hình BenQ PD2700U 27 inch 4K UHD IPS Chuyên đồ họa",
+    "category": "monitor",
+    "price": 9500000,
+    "originalPrice": 10000000,
+    "rating": 4.9,
+    "soldCount": 40,
+    "stock": 18,
+    "image": "https://bizweb.dktcdn.net/100/492/434/products/b2.jpg?v=1697445048723",
+    "brand": "BenQ",
+    "warranty": "36 tháng chính hãng",
+    "description": "Màn hình chuyên nghiệp dành cho nhà thiết kế và sáng tạo nội dung. Độ phân giải 4K, tấm nền IPS 10-bit màu với độ phủ 100% sRGB, chế độ Darkroom và CAD/CAM.",
+    "specs": {
+      "Kích thước": "27 inch",
+      "Độ phân giải": "3840 x 2160 (4K UHD)",
+      "Tần số quét": "60Hz",
+      "Tấm nền": "IPS (10-bit màu)",
+      "Độ phủ màu": "100% sRGB, Rec. 709",
+      "Tính năng nổi bật": "Chế độ DualView, Công nghệ Eye-Care"
+    }
+  },
+  {
+    "id": "MONITOR-34-UW",
+    "name": "Màn hình cong Xiaomi Mi Curved Gaming Monitor 34 inch UWQHD 144Hz",
+    "category": "monitor",
+    "price": 7800000,
+    "originalPrice": 8500000,
+    "rating": 4.7,
+    "soldCount": 50,
+    "stock": 15,
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrIyRDbdntbMltKr3SK2zmrdiErXt2EI4BwChZ5ueGpBrfiOGCfvcuwwt6uY1xSXgNRZQ&usqp=CAU",
+    "brand": "Xiaomi",
+    "warranty": "24 tháng chính hãng",
+    "description": "Màn hình cong siêu rộng (Ultrawide) mang lại trải nghiệm chơi game và đa nhiệm sống động. Độ phân giải UWQHD (3440x1440) và tần số quét 144Hz.",
+    "specs": {
+      "Kích thước": "34 inch (Cong 1500R)",
+      "Độ phân giải": "3440 x 1440 (UWQHD)",
+      "Tần số quét": "144Hz",
+      "Tấm nền": "VA",
+      "Tỷ lệ": "21:9",
+      "Công nghệ": "AMD FreeSync Premium, Độ phủ 121% sRGB"
     }
   }
 ]
