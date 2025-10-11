@@ -1,0 +1,178 @@
+[
+  {
+    "id": "CPU-I5-12400F",
+    "name": "Intel Core i5-12400F (6 nhân 12 luồng, 4.4GHz)",
+    "category": "cpu",
+    "price": 3600000,
+    "originalPrice": 3800000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 25,
+    "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/c/p/cpu-intel-core-i5-12400f.jpg"
+  },
+  {
+    "id": "CPU-R5-5600",
+    "name": "AMD Ryzen 5 5600 (6 nhân 12 luồng, 4.4GHz)",
+    "category": "cpu",
+    "price": 3200000,
+    "originalPrice": 3400000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 30,
+    "image": "https://product.hstatic.net/200000722513/product/gearvn-amd-ryzen-5-5600-2_7437042f90ac4859b1d269d62a3394fe_564ae5f60dd24b96b9df90b32aaacc29_master.png"
+  },
+  {
+    "id": "MB-B660M-DS3H",
+    "name": "Gigabyte B660M DS3H DDR4",
+    "category": "mainboard",
+    "price": 2600000,
+    "originalPrice": 2800000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 15,
+    "image": "https://product.hstatic.net/1000333506/product/500_35229e745cce40079963bcac4ba9b7b7_grande.png"
+  },
+  {
+    "id": "MB-B550M-PLUS",
+    "name": "ASUS TUF Gaming B550M-Plus",
+    "category": "mainboard",
+    "price": 3500000,
+    "originalPrice": 3800000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 18,
+    "image": "https://dlcdnimgs.asus.com/websites/global/products/hvja5zipo40xd0dw/img/kv/x570.png"
+  },
+  {
+    "id": "RAM-Corsair-16GB",
+    "name": "Corsair Vengeance LPX 16GB (2x8GB) DDR4 3200MHz",
+    "category": "ram",
+    "price": 1500000,
+    "originalPrice": 1700000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 40,
+    "image": "https://nvs.tn-cdn.net/2020/02/RAM-Corsair-Vengeance-LPX-16GB-2x8GB-nguyenvu.store-1.png"
+  },
+  {
+    "id": "RAM-Kingston-32GB",
+    "name": "Kingston Fury Beast 32GB (2x16GB) DDR4 3600MHz",
+    "category": "ram",
+    "price": 2500000,
+    "originalPrice": 2800000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 25,
+    "image": "https://nguyencongpc.vn/media/product/21240-ram-kingston-fury-beast-32gb-2x16gb-5200mhz-ddr5-1.jpg"
+  },
+  {
+    "id": "GPU-RTX-4060",
+    "name": "NVIDIA GeForce RTX 4060 8GB",
+    "category": "gpu",
+    "price": 9300000,
+    "originalPrice": 9600000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 10,
+    "image": "https://product.hstatic.net/200000921511/product/bpstore-asus-dual-rtx-4060-ti-oc-16g__11__5d2277c301e1444bb6c48f725fe8c9bc.png"
+  },
+  {
+    "id": "GPU-RX-7600",
+    "name": "AMD Radeon RX 7600 8GB",
+    "category": "gpu",
+    "price": 8500000,
+    "originalPrice": 9000000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 12,
+    "image": "https://thuancomputer.com/wp-content/uploads/2025/04/vga-gigabyte-radeon-rx-7600-gaming-oc-8gb.webp"
+  },
+  {
+    "id": "SSD-980-1TB",
+    "name": "Samsung 980 NVMe SSD 1TB",
+    "category": "storage",
+    "price": 2100000,
+    "originalPrice": 2300000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 40,
+    "image": "https://nguyencongpc.vn/media/product/19223-ssd-samsung-980-1t-2.jpg"
+  },
+  {
+    "id": "SSD-KC3000-2TB",
+    "name": "Kingston KC3000 NVMe 2TB Gen4",
+    "category": "storage",
+    "price": 4200000,
+    "originalPrice": 4500000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 25,
+    "image": "https://bizweb.dktcdn.net/100/329/122/products/ssd-kingston-kc3000-m-2-pcie-gen4-x4-nvme-1tb-skc3000s-1024g.png?v=1741142416457"
+  },
+  {
+    "id": "PSU-CM650",
+    "name": "Cooler Master MWE 650 Bronze V2",
+    "category": "psu",
+    "price": 1300000,
+    "originalPrice": 1500000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 35,
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_LX_R59CLg1WPF_H5RXfOu9bN18OwZf1bnw&s"
+  },
+  {
+    "id": "PSU-ASUS750W",
+    "name": "ASUS TUF 750W Gold",
+    "category": "psu",
+    "price": 2200000,
+    "originalPrice": 2300000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 20,
+    "image": "https://songphuong.vn/Content/uploads/2025/06/TUF-Gaming-750W-Gold-4.webp"
+  },
+  {
+    "id": "CASE-LianLi-205M",
+    "name": "Lian Li 205 Mesh TG",
+    "category": "pcCase",
+    "price": 1600000,
+    "originalPrice": 1700000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 15,
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ77Ina1zlVbzqyJPvpbsek28tmIHbc_SvlCA&s"
+  },
+  {
+    "id": "CASE-NZXT-H5",
+    "name": "NZXT H5 Flow",
+    "category": "pcCase",
+    "price": 2200000,
+    "originalPrice": 2500000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 10,
+    "image": "https://product.hstatic.net/200000722513/product/1666138830-h5-flow-hero-white_b07a47e4546048be848148c351a0bb9a_a8377d3a44e54b488d3a2ce298efec60_master.png"
+  },
+  {
+    "id": "COOLER-Hyper212",
+    "name": "Cooler Master Hyper 212 Black Edition",
+    "category": "cooler",
+    "price": 850000,
+    "originalPrice": 8600000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 25,
+    "image": "https://www.tcsny.it/wp-content/blogs.dir/6/files/2021/07/81eWFgRrFZL._AC_SL1500_.jpg"
+  },
+  {
+    "id": "COOLER-Liquid240",
+    "name": "Deepcool LS520 240mm AIO",
+    "category": "cooler",
+    "price": 1850000,
+    "originalPrice": 2000000,
+    "rating": 5.0,
+    "soldCount": 100,
+    "stock": 15,
+    "image": "https://cdn.deepcool.com/public/ProductFile/DEEPCOOL/Cooling/CPULiquidCoolers/LS520/Overview/01.png?fm=webp&q=60"
+  }
+]

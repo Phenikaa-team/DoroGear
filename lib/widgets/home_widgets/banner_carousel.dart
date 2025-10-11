@@ -64,8 +64,8 @@ class _BannerCarouselState extends State<BannerCarousel> {
   }
 
   Widget _buildPageView(BuildContext context) {
-    return SizedBox(
-      height: Constants.bannerHeight,
+    return AspectRatio(
+      aspectRatio: 2.5,
       child: PageView.builder(
         controller: _controller,
         onPageChanged: (index) {

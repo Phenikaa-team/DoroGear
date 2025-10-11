@@ -40,26 +40,22 @@ class CustomBottomNavBar extends StatelessWidget {
           _buildButton(
             Icons.home_outlined,
             Icons.home,
-            28,
             'Home',
           ),
           _buildButton(
             Icons.shopping_bag_outlined,
             Icons.shopping_bag,
-            28,
             'Mall',
           ),
           BottomNavigationBarItem(icon: SizedBox(height: 28), label: ''),
           _buildButton(
             Icons.chat_bubble_outline,
             Icons.chat_bubble,
-            28,
             'Tin Nhắn',
           ),
           _buildButton(
               Icons.person_outline,
               Icons.person,
-              28,
               'Tài Khoản'
           )
         ],
@@ -67,11 +63,10 @@ class CustomBottomNavBar extends StatelessWidget {
     );
   }
 
-  BottomNavigationBarItem _buildButton(IconData icon, IconData activeIcon,
-      double size, String label) {
+  BottomNavigationBarItem _buildButton(IconData icon, IconData activeIcon, String label) {
     return BottomNavigationBarItem(
-      icon: Icon(icon, size: size),
-      activeIcon: Icon(activeIcon, size: size),
+      icon: Icon(icon, size: 28),
+      activeIcon: Icon(activeIcon, size: 28),
       label: label,
     );
   }
