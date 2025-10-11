@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../constants/app_colors.dart';
+import '../../services/user_service.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -22,6 +23,16 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _initService();
+  }
+
+  Future<void> _initService() async {
+    await UserService.initialize();
+  }
 
   @override
   void dispose() {
@@ -45,14 +56,35 @@ class _SignUpPageState extends State<SignUpPage> {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Account created successfully for ${_nameController.text}!'),
-          backgroundColor: AppColors.primaryColor,
-        ),
+      final name = _nameController.text.trim();
+      final email = _emailController.text.trim();
+      final phoneNum = _phoneController.text.trim();
+      final password = _passwordController.text;
+
+      final success = UserService.registerUser(
+        name: name,
+        email: email,
+        phoneNumber: phoneNum,
+        password: password,
       );
 
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignInPage()));
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Account created successfully for $name!'),
+            backgroundColor: AppColors.primaryColor,
+          ),
+        );
+
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignInPage()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Registration failed: Email already in use.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 

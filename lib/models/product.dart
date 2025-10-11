@@ -1,6 +1,7 @@
 import '../helpers/enums/category.dart';
+import 'model_interfaces.dart';
 
-class Product {
+class Product implements IModel {
   final String id;
   final String name;
   final ProductCategory category;
@@ -11,6 +12,11 @@ class Product {
   final int stock;
   final String? image;
 
+  final String brand;
+  final String warranty;
+  final String description;
+  final Map<String, String> specs;
+
   Product({
     required this.id,
     required this.name,
@@ -20,6 +26,10 @@ class Product {
     required this.rating,
     required this.soldCount,
     required this.stock,
+    required this.brand,
+    required this.warranty,
+    required this.description,
+    required this.specs,
     this.image,
   });
 
@@ -37,9 +47,14 @@ class Product {
       soldCount: json['soldCount'],
       stock: json['stock'],
       image: json['image'],
+      brand: json['brand'] as String? ?? 'Chưa rõ',
+      warranty: json['warranty'] as String? ?? '12 tháng',
+      description: json['description'] as String? ?? 'Sản phẩm chất lượng cao.',
+      specs: Map<String, String>.from(json['specs'] ?? {}),
     );
   }
 
+  @override
   Map<String, dynamic> toJson() => {
     'id': id,
     'name': name,
@@ -50,5 +65,9 @@ class Product {
     'soldCount': soldCount,
     'stock': stock,
     'image': image,
+    'brand': brand,
+    'warranty': warranty,
+    'description': description,
+    'specs': specs,
   };
 }

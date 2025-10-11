@@ -1,7 +1,7 @@
 import 'package:doro_gear/screens/account/signin_page.dart';
 import 'package:flutter/material.dart';
 
-import '/constants/app_colors.dart';
+import 'constants/app_colors.dart';
 
 void main() {
   runApp(const DoroGear());

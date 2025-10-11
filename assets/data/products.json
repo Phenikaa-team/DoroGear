@@ -8,7 +8,18 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 25,
-    "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/c/p/cpu-intel-core-i5-12400f.jpg"
+    "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/c/p/cpu-intel-core-i5-12400f.jpg",
+    "brand": "Intel",
+    "warranty": "36 tháng chính hãng",
+    "description": "CPU Intel Core i5-12400F là bộ xử lý tầm trung mạnh mẽ thuộc thế hệ Alder Lake, mang lại hiệu năng vượt trội cho chơi game và công việc đa nhiệm. Đây là lựa chọn tối ưu cho các cấu hình PC gaming/làm việc giá tốt.",
+    "specs": {
+      "Số nhân/luồng": "6 nhân P-core/12 luồng",
+      "Xung nhịp tối đa": "4.4 GHz",
+      "Bộ nhớ đệm (Cache)": "18MB Intel Smart Cache",
+      "Socket": "LGA 1700",
+      "Điện năng tiêu thụ (TDP)": "65W (PL1), 117W (PL2)",
+      "Card đồ họa tích hợp": "Không (F - yêu cầu VGA rời)"
+    }
   },
   {
     "id": "CPU-R5-5600",
@@ -19,7 +30,18 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 30,
-    "image": "https://product.hstatic.net/200000722513/product/gearvn-amd-ryzen-5-5600-2_7437042f90ac4859b1d269d62a3394fe_564ae5f60dd24b96b9df90b32aaacc29_master.png"
+    "image": "https://product.hstatic.net/200000722513/product/gearvn-amd-ryzen-5-5600-2_7437042f90ac4859b1d269d62a3394fe_564ae5f60dd24b96b9df90b32aaacc29_master.png",
+    "brand": "AMD",
+    "warranty": "36 tháng chính hãng",
+    "description": "AMD Ryzen 5 5600 là CPU kiến trúc Zen 3 (Vermeer), cung cấp hiệu năng chơi game tuyệt vời ở mức giá phải chăng. Sản phẩm đi kèm tản nhiệt Wraith Stealth.",
+    "specs": {
+      "Số nhân/luồng": "6 nhân/12 luồng",
+      "Xung nhịp tối đa": "4.4 GHz",
+      "Bộ nhớ đệm (L3 Cache)": "32MB",
+      "Socket": "AM4",
+      "Điện năng tiêu thụ (TDP)": "65W",
+      "Card đồ họa tích hợp": "Không"
+    }
   },
   {
     "id": "MB-B660M-DS3H",
@@ -30,7 +52,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 15,
-    "image": "https://product.hstatic.net/1000333506/product/500_35229e745cce40079963bcac4ba9b7b7_grande.png"
+    "image": "https://product.hstatic.net/1000333506/product/500_35229e745cce40079963bcac4ba9b7b7_grande.png",
+    "brand": "Gigabyte",
+    "warranty": "36 tháng chính hãng",
+    "description": "Bo mạch chủ Micro ATX hỗ trợ CPU Intel thế hệ 12/13, với khe cắm PCIe 4.0 và 2 khe cắm M.2. Thiết kế VRM ổn định cho các CPU tầm trung.",
+    "specs": {
+      "Chipset": "Intel B660",
+      "Socket": "LGA 1700",
+      "Hỗ trợ RAM": "DDR4 (Max 128GB)",
+      "Kích thước": "Micro ATX",
+      "Cổng kết nối": "HDMI, DisplayPort, 2 x M.2 PCIe 4.0"
+    }
   },
   {
     "id": "MB-B550M-PLUS",
@@ -41,7 +73,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 18,
-    "image": "https://dlcdnimgs.asus.com/websites/global/products/hvja5zipo40xd0dw/img/kv/x570.png"
+    "image": "https://dlcdnimgs.asus.com/websites/global/products/hvja5zipo40xd0dw/img/kv/x570.png",
+    "brand": "ASUS",
+    "warranty": "36 tháng chính hãng",
+    "description": "Bo mạch chủ B550M-Plus dòng TUF Gaming của ASUS, nổi tiếng với độ bền cao và khả năng tản nhiệt tốt. Hỗ trợ PCIe 4.0 và CPU AMD Ryzen 3000/5000 series.",
+    "specs": {
+      "Chipset": "AMD B550",
+      "Socket": "AM4",
+      "Hỗ trợ RAM": "DDR4 (Max 128GB, OC 4400MHz)",
+      "Kích thước": "Micro ATX",
+      "Tính năng nổi bật": "2.5 Gb Ethernet, M.2 Heatsink, Aura Sync RGB"
+    }
   },
   {
     "id": "RAM-Corsair-16GB",
@@ -52,7 +94,18 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 40,
-    "image": "https://nvs.tn-cdn.net/2020/02/RAM-Corsair-Vengeance-LPX-16GB-2x8GB-nguyenvu.store-1.png"
+    "image": "https://nvs.tn-cdn.net/2020/02/RAM-Corsair-Vengeance-LPX-16GB-2x8GB-nguyenvu.store-1.png",
+    "brand": "Corsair",
+    "warranty": "36 tháng (Đổi mới)",
+    "description": "Bộ nhớ RAM Corsair Vengeance LPX được thiết kế cho ép xung hiệu năng cao, với tản nhiệt bằng nhôm nguyên chất giúp tản nhiệt nhanh hơn.",
+    "specs": {
+      "Dung lượng": "16GB (2x8GB)",
+      "Loại RAM": "DDR4",
+      "Tốc độ": "3200MHz",
+      "Độ trễ": "CL16",
+      "Điện áp": "1.35V",
+      "Màu sắc": "Đen"
+    }
   },
   {
     "id": "RAM-Kingston-32GB",
@@ -63,7 +116,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 25,
-    "image": "https://nguyencongpc.vn/media/product/21240-ram-kingston-fury-beast-32gb-2x16gb-5200mhz-ddr5-1.jpg"
+    "image": "https://nguyencongpc.vn/media/product/21240-ram-kingston-fury-beast-32gb-2x16gb-5200mhz-ddr5-1.jpg",
+    "brand": "Kingston",
+    "warranty": "36 tháng (Đổi mới)",
+    "description": "Kingston FURY Beast DDR4 mang lại hiệu năng cao với tốc độ nhanh và độ trễ thấp. Thiết kế tản nhiệt đẹp mắt, tương thích XMP và Ryzen.",
+    "specs": {
+      "Dung lượng": "32GB (2x16GB)",
+      "Loại RAM": "DDR4",
+      "Tốc độ": "3600MHz",
+      "Độ trễ": "CL18",
+      "Tính năng": "Tản nhiệt thấp, Plug N Play"
+    }
   },
   {
     "id": "GPU-RTX-4060",
@@ -74,7 +137,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 10,
-    "image": "https://product.hstatic.net/200000921511/product/bpstore-asus-dual-rtx-4060-ti-oc-16g__11__5d2277c301e1444bb6c48f725fe8c9bc.png"
+    "image": "https://product.hstatic.net/200000921511/product/bpstore-asus-dual-rtx-4060-ti-oc-16g__11__5d2277c301e1444bb6c48f725fe8c9bc.png",
+    "brand": "NVIDIA (ASUS/Gigabyte/MSI...)",
+    "warranty": "36 tháng chính hãng",
+    "description": "Card đồ họa RTX 4060 sử dụng kiến trúc Ada Lovelace, hỗ trợ DLSS 3 và Ray Tracing thế hệ 3, mang lại hiệu năng tuyệt vời cho độ phân giải 1080p và 1440p.",
+    "specs": {
+      "GPU": "GeForce RTX 4060",
+      "VRAM": "8GB GDDR6",
+      "Giao diện": "PCI Express 4.0",
+      "Cổng xuất hình": "DisplayPort 1.4a, HDMI 2.1a",
+      "Nguồn đề nghị": "550W"
+    }
   },
   {
     "id": "GPU-RX-7600",
@@ -85,7 +158,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 12,
-    "image": "https://thuancomputer.com/wp-content/uploads/2025/04/vga-gigabyte-radeon-rx-7600-gaming-oc-8gb.webp"
+    "image": "https://thuancomputer.com/wp-content/uploads/2025/04/vga-gigabyte-radeon-rx-7600-gaming-oc-8gb.webp",
+    "brand": "AMD (ASRock/PowerColor...)",
+    "warranty": "36 tháng chính hãng",
+    "description": "Radeon RX 7600 được xây dựng trên kiến trúc AMD RDNA 3, mang lại hiệu năng đột phá cho chơi game 1080p. Hỗ trợ công nghệ FSR và Ray Tracing tiên tiến.",
+    "specs": {
+      "GPU": "Radeon RX 7600",
+      "VRAM": "8GB GDDR6",
+      "Giao diện": "PCI Express 4.0",
+      "Cổng xuất hình": "DisplayPort 2.1, HDMI 2.1",
+      "Nguồn đề nghị": "550W"
+    }
   },
   {
     "id": "SSD-980-1TB",
@@ -96,7 +179,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 40,
-    "image": "https://nguyencongpc.vn/media/product/19223-ssd-samsung-980-1t-2.jpg"
+    "image": "https://nguyencongpc.vn/media/product/19223-ssd-samsung-980-1t-2.jpg",
+    "brand": "Samsung",
+    "warranty": "60 tháng chính hãng",
+    "description": "SSD Samsung 980 NVMe mang lại tốc độ đọc/ghi nhanh hơn gấp nhiều lần so với SSD SATA truyền thống, là lựa chọn lý tưởng để nâng cấp hiệu suất máy tính.",
+    "specs": {
+      "Dung lượng": "1TB",
+      "Chuẩn giao tiếp": "NVMe PCIe 3.0 x4",
+      "Tốc độ đọc tuần tự": "Lên đến 3,500 MB/s",
+      "Tốc độ ghi tuần tự": "Lên đến 3,000 MB/s",
+      "Form Factor": "M.2 (2280)"
+    }
   },
   {
     "id": "SSD-KC3000-2TB",
@@ -107,7 +200,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 25,
-    "image": "https://bizweb.dktcdn.net/100/329/122/products/ssd-kingston-kc3000-m-2-pcie-gen4-x4-nvme-1tb-skc3000s-1024g.png?v=1741142416457"
+    "image": "https://bizweb.dktcdn.net/100/329/122/products/ssd-kingston-kc3000-m-2-pcie-gen4-x4-nvme-1tb-skc3000s-1024g.png?v=1741142416457",
+    "brand": "Kingston",
+    "warranty": "60 tháng chính hãng",
+    "description": "SSD Kingston KC3000 là ổ cứng Gen 4 hiệu suất cao, cung cấp tốc độ cực nhanh, lý tưởng cho các ứng dụng nặng và chơi game.",
+    "specs": {
+      "Dung lượng": "2TB",
+      "Chuẩn giao tiếp": "NVMe PCIe 4.0 x4",
+      "Tốc độ đọc tuần tự": "Lên đến 7,000 MB/s",
+      "Tốc độ ghi tuần tự": "Lên đến 7,000 MB/s",
+      "Form Factor": "M.2 (2280)"
+    }
   },
   {
     "id": "PSU-CM650",
@@ -118,7 +221,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 35,
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_LX_R59CLg1WPF_H5RXfOu9bN18OwZf1bnw&s"
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_LX_R59CLg1WPF_H5RXfOu9bN18OwZf1bnw&s",
+    "brand": "Cooler Master",
+    "warranty": "5 năm chính hãng",
+    "description": "Bộ nguồn Cooler Master MWE 650 Bronze V2 cung cấp hiệu suất 80 PLUS Bronze, đảm bảo cung cấp điện năng ổn định và hiệu quả cho hệ thống máy tính tầm trung.",
+    "specs": {
+      "Công suất": "650W",
+      "Hiệu suất": "80 Plus Bronze",
+      "Hệ thống cáp": "Non-Modular",
+      "Kích thước quạt": "120mm HDB",
+      "Bảo vệ": "OPP/OVP/SCP/OTP/UVP"
+    }
   },
   {
     "id": "PSU-ASUS750W",
@@ -129,7 +242,16 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 20,
-    "image": "https://songphuong.vn/Content/uploads/2025/06/TUF-Gaming-750W-Gold-4.webp"
+    "image": "https://songphuong.vn/Content/uploads/2025/06/TUF-Gaming-750W-Gold-4.webp",
+    "brand": "ASUS TUF Gaming",
+    "warranty": "7 năm chính hãng",
+    "description": "Nguồn ASUS TUF Gaming 750W Gold với chứng nhận 80 Plus Gold và thiết kế quân sự (military-grade) cho độ bền và hiệu suất cao, phù hợp cho các cấu hình cao cấp.",
+    "specs": {
+      "Công suất": "750W",
+      "Hiệu suất": "80 Plus Gold",
+      "Hệ thống cáp": "Full Modular",
+      "Tính năng nổi bật": "Tụ điện Nhật Bản, Công nghệ 0dB"
+    }
   },
   {
     "id": "CASE-LianLi-205M",
@@ -140,7 +262,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 15,
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ77Ina1zlVbzqyJPvpbsek28tmIHbc_SvlCA&s"
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ77Ina1zlVbzqyJPvpbsek28tmIHbc_SvlCA&s",
+    "brand": "Lian Li",
+    "warranty": "12 tháng",
+    "description": "Vỏ case Lian Li 205 Mesh với mặt trước lưới (mesh) cung cấp luồng khí tối ưu, đi kèm kính cường lực (Tempered Glass) để khoe linh kiện bên trong.",
+    "specs": {
+      "Form Factor Mainboard": "ATX, Micro-ATX, Mini-ITX",
+      "Chất liệu": "Thép, Kính cường lực",
+      "Kích thước": "415 x 210 x 485 mm",
+      "Hỗ trợ tản nhiệt AIO": "Lên đến 240mm (trên/trước)",
+      "Số lượng quạt đi kèm": "2 (trước/sau)"
+    }
   },
   {
     "id": "CASE-NZXT-H5",
@@ -151,7 +283,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 10,
-    "image": "https://product.hstatic.net/200000722513/product/1666138830-h5-flow-hero-white_b07a47e4546048be848148c351a0bb9a_a8377d3a44e54b488d3a2ce298efec60_master.png"
+    "image": "https://product.hstatic.net/200000722513/product/1666138830-h5-flow-hero-white_b07a47e4546048be848148c351a0bb9a_a8377d3a44e54b488d3a2ce298efec60_master.png",
+    "brand": "NZXT",
+    "warranty": "24 tháng",
+    "description": "NZXT H5 Flow tập trung vào hiệu suất làm mát với thiết kế lưới thoáng khí và quạt tối ưu cho việc làm mát GPU.",
+    "specs": {
+      "Form Factor Mainboard": "ATX, Micro-ATX, Mini-ITX",
+      "Chất liệu": "Thép, Kính cường lực",
+      "Tính năng nổi bật": "Quạt hướng xuống làm mát GPU, quản lý cáp tiện lợi",
+      "Hỗ trợ tản nhiệt AIO": "Lên đến 280mm",
+      "Màu sắc": "Trắng/Đen"
+    }
   },
   {
     "id": "COOLER-Hyper212",
@@ -162,7 +304,17 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 25,
-    "image": "https://www.tcsny.it/wp-content/blogs.dir/6/files/2021/07/81eWFgRrFZL._AC_SL1500_.jpg"
+    "image": "https://www.tcsny.it/wp-content/blogs.dir/6/files/2021/07/81eWFgRrFZL._AC_SL1500_.jpg",
+    "brand": "Cooler Master",
+    "warranty": "12 tháng",
+    "description": "Tản nhiệt khí Hyper 212 Black Edition huyền thoại, mang lại hiệu suất làm mát tuyệt vời trong một thiết kế đen mờ sang trọng. Tương thích với hầu hết các socket CPU hiện đại.",
+    "specs": {
+      "Loại": "Tản nhiệt khí đơn tháp",
+      "Socket tương thích": "Intel LGA 1700/1200/1151, AMD AM5/AM4",
+      "Ống dẫn nhiệt": "4 ống đồng tiếp xúc trực tiếp",
+      "Quạt": "1 x SickleFlow 120 V2",
+      "Chiều cao": "154mm"
+    }
   },
   {
     "id": "COOLER-Liquid240",
@@ -173,6 +325,16 @@
     "rating": 5.0,
     "soldCount": 100,
     "stock": 15,
-    "image": "https://cdn.deepcool.com/public/ProductFile/DEEPCOOL/Cooling/CPULiquidCoolers/LS520/Overview/01.png?fm=webp&q=60"
+    "image": "https://cdn.deepcool.com/public/ProductFile/DEEPCOOL/Cooling/CPULiquidCoolers/LS520/Overview/01.png?fm=webp&q=60",
+    "brand": "Deepcool",
+    "warranty": "36 tháng",
+    "description": "Hệ thống tản nhiệt nước AIO Deepcool LS520 240mm với bơm thế hệ 4 mạnh mẽ và quạt hiệu suất cao, đảm bảo nhiệt độ CPU luôn mát mẻ ngay cả khi tải nặng.",
+    "specs": {
+      "Loại": "Tản nhiệt nước AIO",
+      "Kích thước Radiator": "240mm",
+      "Socket tương thích": "Intel LGA 1700/1200/1151, AMD AM5/AM4",
+      "Đèn": "ARGB trên Block và Quạt",
+      "Tốc độ bơm": "3100 RPM"
+    }
   }
 ]

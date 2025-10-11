@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../constants/app_colors.dart';
+import '../../services/user_service.dart';
+import '../admin/AdminPage.dart';
 import '../home/home_page.dart';
 import 'signup_page.dart';
 
@@ -15,8 +17,18 @@ class _SignInPageState extends State<SignInPage> {
   bool _obscurePassword = true;
   bool _rememberMe = false;
   final TextEditingController _emailController = TextEditingController(
-      text: '1234@gmail.com');
+      text: '12345@gmail.com');
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _initService();
+  }
+
+  Future<void> _initService() async {
+    await UserService.initialize();
+  }
 
   @override
   void dispose() {
@@ -44,6 +56,46 @@ class _SignInPageState extends State<SignInPage> {
         ],
       ),
     );
+  }
+
+  void _handleSignIn() {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    debugPrint('Attempting sign-in for email: $email');
+
+    final user = UserService.signIn(email, password);
+
+    if (user != null) {
+      debugPrint(
+          'Sign-in successful for user: ${user.name} (Admin: ${user.isAdmin})');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Signed in as ${user.name}!'),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+
+      if (UserService.isUserAdmin(user)) {
+        debugPrint('Navigating to AdminPage.');
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const AdminPage()));
+      } else {
+        debugPrint('Navigating to HomePage.');
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
+      }
+    } else {
+      debugPrint('Sign-in failed for email: $email (Invalid credentials)');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Sign in failed: Invalid email or password.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   Widget _buildGradientBackground() {
@@ -300,7 +352,7 @@ class _SignInPageState extends State<SignInPage> {
       height: 52,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+          _handleSignIn();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryColor,

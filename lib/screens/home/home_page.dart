@@ -11,6 +11,7 @@ import '../../widgets/home_widgets/shop_functions_grid.dart';
 import '../../widgets/shared/appbar_actions.dart';
 import '../../widgets/shared/custom_bottom_nav_bar.dart';
 import '../../widgets/shared/search_bar.dart';
+import '../account/account_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: _buildAppBar(),
-      body: _isLoading ? _buildLoading() : _buildBody(),
+      body: _isLoading ? _buildLoading() : _buildContent(),
       bottomNavigationBar: CustomBottomNavBar(
         selectedIndex: _selectedIndex,
         onTap: _onBottomNavTap,
@@ -121,6 +122,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   PreferredSizeWidget _buildAppBar() {
+    if (_selectedIndex == 4) {
+      return AppBar(
+        backgroundColor: AppColors.primaryColor,
+        elevation: 0,
+        title: const Text('Tài Khoản', style: TextStyle(color: Colors.white)),
+        centerTitle: true,
+      );
+    }
     return AppBar(
       backgroundColor: AppColors.primaryColor,
       elevation: 0,
@@ -135,7 +144,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildContent() {
+    switch (_selectedIndex) {
+      case 0: // Home
+      case 1: // Mall
+      case 2: // QR Code
+      case 3: // Tin Nhắn
+        return _buildHomeBody();
+      case 4: // Tài Khoản
+        return const AccountPage();
+      default:
+        return _buildHomeBody();
+    }
+  }
+
+  Widget _buildHomeBody() {
     final hotProducts = _getHotProducts();
     final categories = _getAvailableCategories();
 

@@ -5,6 +5,7 @@ import '../../constants/app_colors.dart';
 import '../../constants/assets.dart';
 import '../../helpers/formatter.dart';
 import '../../models/product.dart';
+import '../../screens/product/product_detail_page.dart';
 
 class ProductImagePlaceholder extends StatelessWidget {
   final double? size;
@@ -218,25 +219,35 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 140,
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildImage(),
-          const SizedBox(height: 6),
-          Text(
-            product.name,
-            style: TextStyle(fontSize: 13, color: Colors.grey[800]),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailPage(product: product),
           ),
-          const SizedBox(height: 4),
-          _buildPrices(),
-          const SizedBox(height: 4),
-          _buildRatingAndSales(),
-        ],
+        );
+      },
+      child: Container(
+        width: 140,
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildImage(),
+            const SizedBox(height: 6),
+            Text(
+              product.name,
+              style: TextStyle(fontSize: 13, color: Colors.grey[800]),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 4),
+            _buildPrices(),
+            const SizedBox(height: 4),
+            _buildRatingAndSales(),
+          ],
+        ),
       ),
     );
   }
@@ -394,45 +405,55 @@ class ProductGridCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey[300]!),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailPage(product: product),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildImage(),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product.name,
-                  style:
-                  TextStyle(fontSize: 12, color: Colors.grey[900], height: 1.3),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                _buildPrices(),
-                const SizedBox(height: 4),
-                _buildVoucherBanner(),
-                const SizedBox(height: 4),
-                _buildRatingAndStock()
-              ],
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.grey[300]!),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildImage(),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.name,
+                    style:
+                    TextStyle(fontSize: 12, color: Colors.grey[900], height: 1.3),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  _buildPrices(),
+                  const SizedBox(height: 4),
+                  _buildVoucherBanner(),
+                  const SizedBox(height: 4),
+                  _buildRatingAndStock()
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
