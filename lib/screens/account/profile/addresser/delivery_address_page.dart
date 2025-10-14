@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../constants/app_colors.dart';
+import '../../../../localization/app_localizations.dart';
 import '../../../../models/delivery_address.dart';
 import '../../../../services/address_service.dart';
 import 'add_edit_address_page.dart';
@@ -75,54 +76,49 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
     _loadAddresses();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Địa chỉ giao hàng'),
+        title: Text(t.translate('deliveryAddress')),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _addresses.isEmpty
-          ? _buildEmptyState()
+          ? _buildEmptyState(t)
           : ListView.builder(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 80), // Thêm padding dưới
         itemCount: _addresses.length,
-        itemBuilder: (context, index) {
-          final address = _addresses[index];
-          return _buildAddressCard(address);
-        },
+        itemBuilder: (context, index) => _buildAddressCard(_addresses[index], t),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _navigateToAddEditAddress(),
         icon: const Icon(Icons.add),
-        label: const Text('Thêm địa chỉ mới'),
+        label: Text(t.translate('addNewAddress')),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
       ),
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(AppLocalizations t) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.location_off, size: 80, color: Colors.grey[300]),
           const SizedBox(height: 16),
-          const Text(
-            'Chưa có địa chỉ nào được thêm.',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
-          ),
-          const SizedBox(height: 30),
+          Text(t.translate('noAddresses'), style: const TextStyle(fontSize: 16, color: Colors.grey)),
         ],
       ),
     );
   }
 
-  Widget _buildAddressCard(DeliveryAddress address) {
+  Widget _buildAddressCard(DeliveryAddress address, AppLocalizations t) {
     return Card(
       elevation: 2,
       margin: const EdgeInsets.only(bottom: 16),
@@ -149,8 +145,8 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(color: AppColors.primaryColor),
                     ),
-                    child: const Text(
-                      'Mặc định',
+                    child: Text(
+                      t.translate('default'),
                       style: TextStyle(color: AppColors.primaryColor, fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -185,15 +181,15 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                 if (!address.isDefault)
                   TextButton(
                     onPressed: () => _setDefaultAddress(address),
-                    child: const Text('Đặt làm mặc định', style: TextStyle(color: Colors.blue)),
+                    child: Text(t.translate('setDefault'), style: TextStyle(color: Colors.blue)),
                   ),
                 TextButton(
                   onPressed: () => _navigateToAddEditAddress(address: address),
-                  child: const Text('Sửa', style: TextStyle(color: AppColors.primaryColor)),
+                  child: Text(t.translate('edit'), style: TextStyle(color: AppColors.primaryColor)),
                 ),
                 TextButton(
                   onPressed: () => _deleteAddress(address.id),
-                  child: const Text('Xóa', style: TextStyle(color: Colors.red)),
+                  child: Text(t.translate('delete'), style: TextStyle(color: Colors.red)),
                 ),
               ],
             ),

@@ -2,8 +2,12 @@ import 'package:doro_gear/helpers/formatter.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/app_colors.dart';
+import '../../localization/app_localizations.dart';
+import '../../models/cart.dart';
 import '../../models/product.dart';
+import '../../services/user_service.dart';
 import '../../widgets/shared/appbar_actions.dart';
+import '../account/signin_page.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Product product;
@@ -18,40 +22,105 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   void _incrementQuantity() {
     if (_quantity < widget.product.stock) {
-      setState(() {
-        _quantity++;
-      });
+      setState(() => _quantity++);
     }
   }
 
   void _decrementQuantity() {
     if (_quantity > 1) {
-      setState(() {
-        _quantity--;
-      });
+      setState(() => _quantity--);
     }
   }
 
+  Future<void> _showLoginPrompt() async {
+    final t = AppLocalizations.of(context)!;
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(t.translate('loginRequired')),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(t.translate('loginToProceed')),
+                Text(t.translate('doYouWantToLogin')),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(t.translate('cancel'), style: const TextStyle(color: Colors.grey)),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text(t.translate('signIn')),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInPage()),
+                      (Route<dynamic> route) => false,
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _addToCart() {
+    if (UserService.isGuest) {
+      _showLoginPrompt();
+      return;
+    }
+    for (int i = 0; i < _quantity; i++) {
+      Cart.add(widget.product);
+    }
+    setState(() {});
+
+    final t = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Đã thêm $_quantity x ${widget.product.name} vào giỏ hàng!')),
+      SnackBar(content: Text(
+          t.translate('addedToCart')
+              .replaceAll('{quantity}', '$_quantity')
+              .replaceAll('{productName}', widget.product.name)
+      )),
     );
   }
 
   void _buyNow() {
+    if (UserService.isGuest) {
+      _showLoginPrompt();
+      return;
+    }
+    final t = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Chuyển đến trang thanh toán (Mua ngay)!')),
+      SnackBar(content: Text(t.translate('buyNowAction'))),
+    );
+  }
+
+  void _chatWithShop() {
+    if (UserService.isGuest) {
+      _showLoginPrompt();
+      return;
+    }
+    final t = AppLocalizations.of(context)!;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(t.translate('chatAction'))),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         title: Text(widget.product.name, style: const TextStyle(fontSize: 16)),
         backgroundColor: AppColors.primaryColor,
-        actions: const [NotificationButton(), CartButton(itemCount: 0)],
+        foregroundColor: Colors.white,
+        actions: [const NotificationButton(), CartButton(itemCount: Cart.items.length)],
       ),
       body: Column(
         children: [
@@ -60,34 +129,23 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 1. Product Image/Carousel
                   _buildProductImage(context),
                   const SizedBox(height: 8),
-
-                  // 2. Product Info (Price, Name, Rating)
-                  _buildProductInfo(),
+                  _buildProductInfo(t),
                   const SizedBox(height: 12),
-
-                  // 3. More info
-                  _buildGeneralDetails(),
+                  _buildGeneralDetails(t),
                   const SizedBox(height: 8),
-
-                  // 4. Quantity Selector
-                  _buildQuantitySelector(),
+                  _buildQuantitySelector(t),
                   const SizedBox(height: 8),
-
-                  // 5. Product Specs
-                  _buildSpecsSection(),
+                  _buildSpecsSection(t),
                   const SizedBox(height: 8),
-
-                  // 6. Product Description
-                  _buildDescriptionSection(),
+                  _buildDescriptionSection(t),
                   const SizedBox(height: 20),
                 ],
               ),
             ),
           ),
-          _buildBottomActions(),
+          _buildBottomActions(t),
         ],
       ),
     );
@@ -107,9 +165,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  Widget _buildProductInfo() {
+  Widget _buildProductInfo(AppLocalizations t) {
     final product = widget.product;
-    final discount = ((product.originalPrice - product.price) / product.originalPrice * 100).toInt();
+    final discount = ((product.originalPrice - product.price) /
+        product.originalPrice * 100).toInt();
 
     return Padding(
       padding: const EdgeInsets.all(12.0),
@@ -134,7 +193,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 4, vertical: 0),
                     decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(2),
@@ -172,11 +232,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             children: [
               const Icon(Icons.star, color: Colors.amber, size: 18),
               const SizedBox(width: 4),
-              Text('${product.rating.toString()} (${product.soldCount} đã bán)',
-                  style: const TextStyle(color: Colors.grey)),
+              Text('${product.rating} (${product.soldCount} ${t.translate(
+                  'sold')})', style: const TextStyle(color: Colors.grey)),
               const Spacer(),
-              Text('Còn lại: ${product.stock}', style: TextStyle(
-                  color: product.stock > 10 ? Colors.green : Colors.red)),
+              Text('${t.translate('remaining')}: ${product.stock}',
+                  style: TextStyle(
+                      color: product.stock > 10 ? Colors.green : Colors.red)),
             ],
           ),
         ],
@@ -184,13 +245,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  Widget _buildQuantitySelector() {
+  Widget _buildQuantitySelector(AppLocalizations t) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text('Số lượng', style: TextStyle(fontSize: 16)),
+          Text(t.translate('quantity'), style: const TextStyle(fontSize: 16)),
           Row(
             children: [
               IconButton(
@@ -211,49 +272,31 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  Widget _buildGeneralDetails() {
+  Widget _buildGeneralDetails(AppLocalizations t) {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildDetailRow(
-            icon: Icons.business,
-            label: 'Thương hiệu',
-            value: widget.product.brand,
-            color: Colors.black87,
-          ),
+          _buildDetailRow(icon: Icons.business, label: t.translate('brand'), value: widget.product.brand, color: Colors.black87),
           const Divider(height: 16),
-          _buildDetailRow(
-            icon: Icons.security,
-            label: 'Bảo hành',
-            value: widget.product.warranty,
-            color: Colors.black87,
-          ),
+          _buildDetailRow(icon: Icons.security, label: t.translate('warranty'), value: widget.product.warranty, color: Colors.black87),
           const Divider(height: 16),
-          _buildDetailRow(
-            icon: Icons.inventory,
-            label: 'Kho hàng',
-            value: '${widget.product.stock} sản phẩm',
-            color: widget.product.stock > 10 ? Colors.green : Colors.red,
-          ),
+          _buildDetailRow(icon: Icons.inventory, label: t.translate('stock'), value: '${widget.product.stock} ${t.translate('products')}', color: widget.product.stock > 10 ? Colors.green : Colors.red),
         ],
       ),
     );
   }
 
-  Widget _buildSpecsSection() {
+  Widget _buildSpecsSection(AppLocalizations t) {
     if (widget.product.specs.isEmpty) return const SizedBox.shrink();
-
     return Container(
-      color: Colors.white,
       padding: const EdgeInsets.all(12),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'THÔNG SỐ KỸ THUẬT',
+          Text(
+            t.translate('specs'),
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
@@ -261,21 +304,22 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
           ),
           const Divider(height: 16),
-          ...widget.product.specs.entries.map((entry) => _buildSpecRow(entry.key, entry.value)).toList(),
+          ...widget.product.specs.entries.map((entry) =>
+              _buildSpecRow(entry.key, entry.value)).toList(),
         ],
       ),
     );
   }
 
-  Widget _buildDescriptionSection() {
+  Widget _buildDescriptionSection(AppLocalizations t) {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'MÔ TẢ SẢN PHẨM',
+          Text(
+            t.translate('description'),
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
@@ -336,7 +380,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  Widget _buildBottomActions() {
+  Widget _buildBottomActions(AppLocalizations t) {
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -348,16 +392,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           Expanded(
             flex: 1,
             child: IconButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Hành động: Chat với Shop')),
-                );
-              },
+              onPressed: _chatWithShop,
               icon: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.chat_bubble_outline, color: AppColors.primaryColor),
-                  Text('Chat', style: TextStyle(fontSize: 10, color: AppColors.primaryColor)),
+                  Text(t.translate('chat'), style: TextStyle(fontSize: 10, color: AppColors.primaryColor)),
                 ],
               ),
             ),
@@ -369,7 +409,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               child: ElevatedButton.icon(
                 onPressed: _addToCart,
                 icon: const Icon(Icons.add_shopping_cart, color: Colors.white),
-                label: const Text('Thêm vào Giỏ hàng', style: TextStyle(color: Colors.white)),
+                label: Text(t.translate('addToCart'), style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -389,7 +429,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                 ),
-                child: const Text('Mua ngay', style: TextStyle(color: Colors.white)),
+                child: Text(t.translate('buyNow'), style: TextStyle(color: Colors.white)),
               ),
             ),
           ),

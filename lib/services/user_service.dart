@@ -15,6 +15,7 @@ class UserService {
   static const String adminName = 'Doro Gear Admin';
 
   static User? get currentUser => _currentUser;
+  static bool get isGuest => _currentUser == null;
 
   static Future<void> _saveUsers() async {
     final prefs = await SharedPreferences.getInstance();
@@ -23,7 +24,7 @@ class UserService {
   }
 
   static Future<bool> deleteUser() async {
-    if (_currentUser == null) return false;
+    if (isGuest) return false;
 
     final userEmail = _currentUser!.email.toLowerCase();
     final isRemoved = _users.remove(userEmail) != null;

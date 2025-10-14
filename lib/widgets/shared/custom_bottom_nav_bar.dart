@@ -1,3 +1,4 @@
+import 'package:doro_gear/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/app_colors.dart';
@@ -16,16 +17,24 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
+      alignment: Alignment.bottomCenter,
       children: [
-        _buildBottomNavBar(),
+        _buildBottomNavBar(context),
         _buildFloatingButton(context)
       ],
     );
   }
 
-  Widget _buildBottomNavBar() {
+  Widget _buildBottomNavBar(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Container(
-      decoration: const BoxDecoration(color: Colors.white),
+      height: 60,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, -2))
+        ],
+      ),
       child: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: onTap,
@@ -37,27 +46,11 @@ class CustomBottomNavBar extends StatelessWidget {
         unselectedFontSize: 12,
         elevation: 0,
         items: [
-          _buildButton(
-            Icons.home_outlined,
-            Icons.home,
-            'Home',
-          ),
-          _buildButton(
-            Icons.shopping_bag_outlined,
-            Icons.shopping_bag,
-            'Mall',
-          ),
-          BottomNavigationBarItem(icon: SizedBox(height: 28), label: ''),
-          _buildButton(
-            Icons.chat_bubble_outline,
-            Icons.chat_bubble,
-            'Tin Nhắn',
-          ),
-          _buildButton(
-              Icons.person_outline,
-              Icons.person,
-              'Tài Khoản'
-          )
+          _buildButton(Icons.home_outlined, Icons.home, t.translate('home')),
+          _buildButton(Icons.shopping_bag_outlined, Icons.shopping_bag, t.translate('mall')),
+          const BottomNavigationBarItem(icon: SizedBox.shrink(), label: ''),
+          _buildButton(Icons.chat_bubble_outline, Icons.chat_bubble, t.translate('messages')),
+          _buildButton(Icons.person_outline, Icons.person, t.translate('account')),
         ],
       ),
     );
@@ -72,54 +65,32 @@ class CustomBottomNavBar extends StatelessWidget {
   }
 
   Widget _buildFloatingButton(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Positioned(
-      top: -30,
-      left: MediaQuery
-          .of(context)
-          .size
-          .width / 2 - 35,
+      top: -25,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 70,
-            height: 70,
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primaryColor.withOpacity(0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () => onTap(2),
-                borderRadius: BorderRadius.circular(35),
-                child: const Center(
-                  child: Icon(
-                    Icons.qr_code_scanner,
-                    color: Colors.white,
-                    size: 36,
-                  ),
-                ),
+          SizedBox(
+            width: 64,
+            height: 64,
+            child: FittedBox(
+              child: FloatingActionButton(
+                onPressed: () => onTap(2),
+                backgroundColor: AppColors.primaryColor,
+                elevation: 4.0,
+                shape: const CircleBorder(),
+                child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 32),
               ),
             ),
           ),
+          const SizedBox(height: 4),
           Text(
-            'QR Code',
+            t.translate('qrCode'),
             style: TextStyle(
               fontSize: 12,
-              color: selectedIndex == 2
-                  ? AppColors.primaryColor
-                  : Colors.grey[600],
-              fontWeight: selectedIndex == 2
-                  ? FontWeight.w600
-                  : FontWeight.normal,
+              color: selectedIndex == 2 ? AppColors.primaryColor : Colors.grey[600],
+              fontWeight: selectedIndex == 2 ? FontWeight.w600 : FontWeight.normal,
             ),
           ),
         ],
@@ -127,4 +98,3 @@ class CustomBottomNavBar extends StatelessWidget {
     );
   }
 }
-

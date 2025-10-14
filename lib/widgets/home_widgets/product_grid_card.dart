@@ -4,6 +4,7 @@ import '../../constants/Constants.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/assets.dart';
 import '../../helpers/formatter.dart';
+import '../../localization/app_localizations.dart';
 import '../../models/product.dart';
 import '../../screens/product/product_detail_page.dart';
 
@@ -194,7 +195,8 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRatingAndSales() {
+  Widget _buildRatingAndSales(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Row(
       children: [
         const Icon(Icons.star, size: 12, color: Colors.amber),
@@ -208,7 +210,7 @@ class ProductCard extends StatelessWidget {
         const SizedBox(width: 4),
         Expanded(
           child: Text(
-            'Đã bán ${product.soldCount}',
+            "${t.translate('sold')} ${product.soldCount}",
             style: TextStyle(fontSize: 11, color: Colors.grey[600]),
             overflow: TextOverflow.ellipsis,
           ),
@@ -220,14 +222,10 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetailPage(product: product),
-          ),
-        );
-      },
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProductDetailPage(product: product)),
+      ),
       child: Container(
         width: 140,
         margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -245,7 +243,7 @@ class ProductCard extends StatelessWidget {
             const SizedBox(height: 4),
             _buildPrices(),
             const SizedBox(height: 4),
-            _buildRatingAndSales(),
+            _buildRatingAndSales(context),
           ],
         ),
       ),
@@ -258,7 +256,8 @@ class ProductGridCard extends StatelessWidget {
 
   const ProductGridCard({super.key, required this.product});
 
-  Widget _buildImage() {
+  Widget _buildImage(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Stack(
       children: [
         Container(
@@ -289,8 +288,8 @@ class ProductGridCard extends StatelessWidget {
               color: Colors.red,
               borderRadius: BorderRadius.circular(4),
             ),
-            child: const Text(
-              'HOT',
+            child: Text(
+              t.translate('hot'),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 11,
@@ -356,81 +355,58 @@ class ProductGridCard extends StatelessWidget {
     );
   }
 
-  Widget _buildVoucherBanner() {
+  Widget _buildVoucherBanner(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-      decoration: BoxDecoration(
-        color: Colors.cyan[50],
-        borderRadius: BorderRadius.circular(4),
-      ),
+      decoration: BoxDecoration(color: Colors.cyan[50], borderRadius: BorderRadius.circular(4)),
       child: Text(
-        'Giảm thêm 269.000 đ cho hội viên vàng',
-        style: TextStyle(
-          fontSize: 10,
-          color: Colors.cyan[700],
-          fontWeight: FontWeight.w500,
-        ),
+        t.translate('voucherBannerExample'),
+        style: TextStyle(fontSize: 10, color: Colors.cyan[700], fontWeight: FontWeight.w500),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
     );
   }
 
-  Widget _buildRatingAndStock() {
+  Widget _buildRatingAndStock(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Row(
       children: [
         const Icon(Icons.star, size: 16, color: Colors.amber),
         const SizedBox(width: 4),
         Text(
           '${product.rating.toStringAsFixed(1)}/5.0',
-          style: const TextStyle(
-            fontSize: 12,
-            color: Colors.black87,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(fontSize: 12, color: Colors.black87, fontWeight: FontWeight.w500),
         ),
         const SizedBox(width: 8),
         const Icon(Icons.check_circle, size: 14, color: Colors.green),
         const SizedBox(width: 4),
-        Expanded(
-          child: Text(
-            'Sẵn hàng',
-            style: TextStyle(fontSize: 11, color: Colors.grey[700]),
-          ),
-        ),
+        Expanded(child: Text(t.translate('inStock'), style: TextStyle(fontSize: 11, color: Colors.grey[700]))),
       ],
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetailPage(product: product),
-          ),
-        );
-      },
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProductDetailPage(product: product)),
+      ),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Colors.grey[300]!),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: const Offset(0, 2))],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildImage(),
+            _buildImage(context),
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: Column(
@@ -438,17 +414,16 @@ class ProductGridCard extends StatelessWidget {
                 children: [
                   Text(
                     product.name,
-                    style:
-                    TextStyle(fontSize: 12, color: Colors.grey[900], height: 1.3),
+                    style: TextStyle(fontSize: 12, color: Colors.grey[900], height: 1.3),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   _buildPrices(),
                   const SizedBox(height: 4),
-                  _buildVoucherBanner(),
+                  _buildVoucherBanner(context),
                   const SizedBox(height: 4),
-                  _buildRatingAndStock()
+                  _buildRatingAndStock(context),
                 ],
               ),
             ),
@@ -513,26 +488,32 @@ class ProductSection extends StatelessWidget {
 }
 
 class HotProductsRow extends StatelessWidget {
-  final List<Product> products;
+  final List<Product> hotProducts;
+  final List<Product> bestSellingProducts;
 
-  const HotProductsRow({super.key, required this.products});
+  const HotProductsRow({
+    super.key,
+    required this.hotProducts,
+    required this.bestSellingProducts,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         children: [
           ProductSection(
-            title: 'Sản phẩm HOT',
+            title: t.translate('hotProducts'),
             accentColor: Colors.red,
-            products: products,
+            products: hotProducts,
           ),
           const SizedBox(height: 12),
           ProductSection(
-            title: 'Bán chạy nhất',
+            title: t.translate('bestSelling'),
             accentColor: Colors.orange,
-            products: products,
+            products: bestSellingProducts,
           ),
         ],
       ),
@@ -543,11 +524,13 @@ class HotProductsRow extends StatelessWidget {
 class ProductGridSection extends StatelessWidget {
   final String title;
   final List<Product> products;
+  final String viewMoreText;
 
   const ProductGridSection({
     super.key,
     required this.title,
     required this.products,
+    required this.viewMoreText,
   });
 
   Widget _buildProductGrid() {
@@ -586,20 +569,14 @@ class ProductGridSection extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: const Offset(0, 2))],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProductSectionHeader(
               title: title,
-              actionText: 'Xem thêm >',
+              actionText: viewMoreText,
             ),
             _buildProductGrid(),
           ],

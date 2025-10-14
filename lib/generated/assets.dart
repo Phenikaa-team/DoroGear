@@ -2,7 +2,10 @@
 class Assets {
   Assets._();
 
-  static const String datasProducts = 'assets/data/products.json';
+  static const String assetsDataProducts = 'assets/data/products.json';
+  static const String dataProducts = 'assets/data/products.json';
   static const String imagesI514400F = 'assets/images/i5-14400F.png';
+  static const String langEn = 'assets/lang/en.json';
+  static const String langVi = 'assets/lang/vi.json';
 
 }

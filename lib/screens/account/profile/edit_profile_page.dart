@@ -1,8 +1,10 @@
+import 'package:doro_gear/localization/app_localizations.dart';
 import 'package:doro_gear/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../constants/app_colors.dart';
+import '../../../models/user.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -13,7 +15,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
-  final user = UserService.currentUser!;
+  late final User _user;
 
   late final TextEditingController _nameController;
   late final TextEditingController _emailController;
@@ -22,9 +24,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: user.name);
-    _emailController = TextEditingController(text: user.email);
-    _phoneController = TextEditingController(text: user.phoneNumber);
+    _user = UserService.currentUser!;
+    _nameController = TextEditingController(text: _user.name);
+    _emailController = TextEditingController(text: _user.email);
+    _phoneController = TextEditingController(text: _user.phoneNumber);
   }
 
   @override
@@ -36,40 +39,36 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   Future<void> _saveProfile() async {
-    if (_formKey.currentState!.validate()) {
-      final success = await UserService.updateUser(
-        oldEmail: user.email,
-        newName: _nameController.text.trim(),
-        newEmail: _emailController.text.trim(),
-        newPhoneNumber: _phoneController.text.trim(),
-      );
+    if (!(_formKey.currentState?.validate() ?? false)) return;
 
-      if (success) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Cập nhật hồ sơ thành công!'),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
-        Navigator.pop(context, true);
-      } else {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Lỗi: Email mới đã được sử dụng.'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
+    final t = AppLocalizations.of(context)!;
+    final success = await UserService.updateUser(
+      oldEmail: _user.email,
+      newName: _nameController.text.trim(),
+      newEmail: _emailController.text.trim(),
+      newPhoneNumber: _phoneController.text.trim(),
+    );
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(success ? t.translate('updateSuccess') : t.translate('emailInUseError')),
+        backgroundColor: success ? AppColors.primaryColor : Colors.red,
+      ),
+    );
+
+    if (success) {
+      Navigator.pop(context, true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chỉnh sửa hồ sơ'),
+        title: Text(t.translate('editProfile')),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
         actions: [
@@ -89,31 +88,31 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 30),
               _buildTextField(
                 controller: _nameController,
-                label: 'Tên đầy đủ',
+                label: t.translate('fullName'),
                 icon: Icons.person_outline,
-                validator: (value) => value!.trim().length < 2 ? 'Tên phải có ít nhất 2 ký tự' : null,
+                validator: (value) => (value?.trim().length ?? 0) < 2 ? t.translate('nameMinLength') : null,
               ),
               const SizedBox(height: 20),
               _buildTextField(
                 controller: _emailController,
-                label: 'Địa chỉ Email',
+                label: t.translate('emailAddress'),
                 icon: Icons.email_outlined,
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty) return 'Vui lòng nhập email';
-                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return 'Email không hợp lệ';
+                  if (value == null || value.trim().isEmpty) return t.translate('pleaseEnterEmail');
+                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return t.translate('emailInvalid');
                   return null;
                 },
               ),
               const SizedBox(height: 20),
               _buildTextField(
                 controller: _phoneController,
-                label: 'Số điện thoại',
+                label: t.translate('phoneNumber'),
                 icon: Icons.phone_android,
                 keyboardType: TextInputType.phone,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(11)],
                 validator: (value) {
-                  if (value!.trim().isNotEmpty && value.length < 10) return 'SĐT phải có ít nhất 10 số';
+                  if (value != null && value.trim().isNotEmpty && value.length < 10) return t.translate('phoneMinLength');
                   return null;
                 },
               ),
@@ -128,7 +127,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  child: const Text('Lưu Thay Đổi', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  child: Text(t.translate('saveChanges'), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
@@ -151,15 +150,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
           right: 0,
           child: Container(
             padding: const EdgeInsets.all(4),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.camera_alt,
-              color: AppColors.primaryColor,
-              size: 20,
-            ),
+            decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+            child: const Icon(Icons.camera_alt, color: AppColors.primaryColor, size: 20),
           ),
         ),
       ],
@@ -182,18 +174,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(icon, color: AppColors.primaryColor),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey[300]!),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey[300]!),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.primaryColor, width: 2),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey[300]!)),
+        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.primaryColor, width: 2)),
         contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       ),
       style: const TextStyle(fontSize: 16),

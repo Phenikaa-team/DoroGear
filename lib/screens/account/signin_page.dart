@@ -1,3 +1,4 @@
+import 'package:doro_gear/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/app_colors.dart';
@@ -39,6 +40,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
       body: Stack(
         children: [
@@ -47,8 +49,8 @@ class _SignInPageState extends State<SignInPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _buildHeader(),
-                  _buildSignInForm(),
+                  _buildHeader(t),
+                  _buildSignInForm(t),
                 ],
               ),
             ),
@@ -59,44 +61,45 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void _handleSignIn() {
+    final t = AppLocalizations.of(context)!;
     final email = _emailController.text.trim();
     final password = _passwordController.text;
-
-    debugPrint('Attempting sign-in for email: $email');
 
     final user = UserService.signIn(email, password);
 
     if (user != null) {
-      debugPrint(
-          'Sign-in successful for user: ${user.name} (Admin: ${user.isAdmin})');
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Signed in as ${user.name}!'),
+          content: Text('${t.translate('signedInAs')} ${user.name}!'),
           backgroundColor: AppColors.primaryColor,
         ),
       );
 
       if (UserService.isUserAdmin(user)) {
-        debugPrint('Navigating to AdminPage.');
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const AdminPage()));
       } else {
-        debugPrint('Navigating to HomePage.');
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const HomePage()));
       }
     } else {
-      debugPrint('Sign-in failed for email: $email (Invalid credentials)');
-
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Sign in failed: Invalid email or password.'),
+        SnackBar(
+          content: Text(t.translate('signInFail')),
           backgroundColor: Colors.red,
         ),
       );
     }
   }
+
+  void _continueAsGuest() {
+    UserService.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const HomePage()),
+    );
+  }
+
 
   Widget _buildGradientBackground() {
     return Container(
@@ -113,16 +116,16 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppLocalizations t) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(40, 60, 40, 40),
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Sign in',
-              style: TextStyle(
+            Text(
+              t.translate('signIn'),
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 42,
                 fontWeight: FontWeight.bold,
@@ -141,7 +144,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget _buildSignInForm() {
+  Widget _buildSignInForm(AppLocalizations t) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(32),
@@ -159,9 +162,9 @@ class _SignInPageState extends State<SignInPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Welcome',
-            style: TextStyle(
+          Text(
+            t.translate('welcome'),
+            style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
@@ -169,7 +172,7 @@ class _SignInPageState extends State<SignInPage> {
           ),
           const SizedBox(height: 8),
           Text(
-            'To keep connected with us please login with your personal info',
+            t.translate("starter"),
             style: TextStyle(
               fontSize: 14,
               color: Colors.grey[600],
@@ -177,28 +180,28 @@ class _SignInPageState extends State<SignInPage> {
             ),
           ),
           const SizedBox(height: 32),
-          _buildEmailField(),
+          _buildEmailField(t),
           const SizedBox(height: 20),
-          _buildPasswordField(),
+          _buildPasswordField(t),
           const SizedBox(height: 16),
           _buildRememberMeAndForgotPassword(),
           const SizedBox(height: 32),
-          _buildSignInButton(),
+          _buildSignInButton(t),
           const SizedBox(height: 24),
           _buildDivider(),
           const SizedBox(height: 24),
-          _buildSocialSignInButtons(),
+          _buildSocialSignInButtons(t),
         ],
       ),
     );
   }
 
-  Widget _buildEmailField() {
+  Widget _buildEmailField(AppLocalizations t) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Email Address',
+          t.translate('emailAddress'),
           style: TextStyle(
             fontSize: 12,
             color: Colors.grey[600],
@@ -214,7 +217,7 @@ class _SignInPageState extends State<SignInPage> {
           child: TextField(
             controller: _emailController,
             decoration: InputDecoration(
-              hintText: 'Enter your email',
+              hintText: t.translate("enterYourEmail"),
               hintStyle: TextStyle(color: Colors.grey[400]),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.symmetric(
@@ -232,12 +235,12 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget _buildPasswordField() {
+  Widget _buildPasswordField(AppLocalizations t) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Password',
+          t.translate('password'),
           style: TextStyle(
             fontSize: 12,
             color: Colors.grey[600],
@@ -254,7 +257,7 @@ class _SignInPageState extends State<SignInPage> {
             controller: _passwordController,
             obscureText: _obscurePassword,
             decoration: InputDecoration(
-              hintText: 'Enter your password',
+              hintText: t.translate('enterYourPassword'),
               hintStyle: TextStyle(color: Colors.grey[400]),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.symmetric(
@@ -346,14 +349,12 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget _buildSignInButton() {
+  Widget _buildSignInButton(AppLocalizations t) {
     return SizedBox(
       width: double.infinity,
       height: 52,
       child: ElevatedButton(
-        onPressed: () {
-          _handleSignIn();
-        },
+        onPressed: _handleSignIn,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryColor,
           foregroundColor: Colors.white,
@@ -362,9 +363,9 @@ class _SignInPageState extends State<SignInPage> {
           ),
           elevation: 0,
         ),
-        child: const Text(
-          'Sign in',
-          style: TextStyle(
+        child: Text(
+          t.translate('signIn'),
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
             letterSpacing: 0.5,
@@ -375,43 +376,44 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Widget _buildDivider() {
+    final t = AppLocalizations.of(context)!;
     return Row(
       children: [
         Expanded(child: Divider(color: Colors.grey[300], thickness: 1)),
-        Flexible(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Text(
-                'OR CONTINUE WITH',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.grey[500],
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.5,
-                ),
-              ),
-            )
+        
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Text(
+            t.translate('orContinueWith'),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.grey[500],
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.5,
+            ),
+          ),
         ),
+
         Expanded(child: Divider(color: Colors.grey[300], thickness: 1)),
       ],
     );
   }
 
-  Widget _buildSocialSignInButtons() {
+  Widget _buildSocialSignInButtons(AppLocalizations t) {
     return Column(
       children: [
         _buildSocialButton(
           icon: Icons.facebook,
           iconColor: const Color(0xFF1877F2),
-          label: 'Sign in with Facebook',
+          label: '${t.translate('signInWith')} Facebook',
           onPressed: () {},
         ),
         const SizedBox(height: 12),
         _buildSocialButton(
           icon: Icons.email,
           iconColor: const Color(0xFFD80000),
-          label: 'Sign in with Google',
+          label: '${t.translate('signInWith')} Google',
           onPressed: () {},
         ),
         const SizedBox(height: 20),
@@ -420,7 +422,7 @@ class _SignInPageState extends State<SignInPage> {
           children: [
             Flexible(
                 child: Text(
-                  "Don't have account?",
+                  t.translate('dontHaveAccount'),
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.grey[600],
@@ -439,9 +441,9 @@ class _SignInPageState extends State<SignInPage> {
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              child: const Text(
-                'Sign up',
-                style: TextStyle(
+              child: Text(
+                t.translate('signUp'),
+                style: const TextStyle(
                   fontSize: 13,
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.w600,
@@ -449,6 +451,18 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
           ],
+        ),
+        const SizedBox(height: 10),
+        TextButton(
+          onPressed: _continueAsGuest,
+          child: Text(
+            t.translate('continueAsGuest'),
+            style: const TextStyle(
+              fontSize: 14,
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
       ],
     );

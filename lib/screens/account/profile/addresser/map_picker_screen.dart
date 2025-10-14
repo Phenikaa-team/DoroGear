@@ -1,12 +1,13 @@
+import 'package:doro_gear/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:geocoding/geocoding.dart';
 
 class MapPickerScreen extends StatefulWidget {
-  const MapPickerScreen({super.key});
+  final Position? initialPosition;
+  const MapPickerScreen({super.key, this.initialPosition});
 
   @override
   State<MapPickerScreen> createState() => _MapPickerScreenState();
@@ -15,101 +16,102 @@ class MapPickerScreen extends StatefulWidget {
 class _MapPickerScreenState extends State<MapPickerScreen> {
   final MapController _mapController = MapController();
 
-  LatLng? _initialLocation;
-
-  LatLng _selectedLocation = const LatLng(21.0285, 105.8542);
-  String _addressText = "Chạm vào bản đồ để chọn vị trí...";
+  LatLng _selectedLocation = const LatLng(21.0285, 105.8542); // Hanoi
+  String _addressText = "";
+  bool _isLoadingAddress = true;
+  bool _isInitialLocationSet = false;
 
   @override
   void initState() {
     super.initState();
-    _setInitialLocation();
+    _addressText = "Tap the map to select a location...";
+    //_setInitialLocation()
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isLoadingAddress) {
+      _addressText = AppLocalizations.of(context)!.translate('tapToSelectLocation');
+    }
   }
 
   Future<void> _setInitialLocation() async {
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.medium
-      );
-
-      final currentLatLng = LatLng(position.latitude, position.longitude);
-
-      setState(() {
-        _initialLocation = currentLatLng;
-        _selectedLocation = currentLatLng;
-      });
-
-      _mapController.move(currentLatLng, 15.0);
-
-      _getAddressFromLatLng(currentLatLng);
-
-    } catch (e) {
-      _initialLocation = _selectedLocation;
-      _getAddressFromLatLng(_selectedLocation);
-    }
-  }
-
-  void _backToCurrentLocation() {
-    if (_initialLocation != null) {
-      _mapController.move(_initialLocation!, 15.0);
-
-      _getAddressFromLatLng(_initialLocation!);
-      _addressText = "Vị trí hiện tại của thiết bị.";
+    LatLng locationToUse;
+    if (widget.initialPosition != null) {
+      locationToUse = LatLng(widget.initialPosition!.latitude, widget.initialPosition!.longitude);
     } else {
-      _getAddressFromLatLng(_selectedLocation);
+      locationToUse = _selectedLocation;
     }
+
+    setState(() {
+      _selectedLocation = locationToUse;
+    });
+
+    _mapController.move(locationToUse, 15.0);
+    await _getAddressFromLatLng(locationToUse);
   }
 
   Future<void> _getAddressFromLatLng(LatLng latLng) async {
     if (!mounted) return;
+    final t = AppLocalizations.of(context)!;
+
     setState(() {
-      _addressText = "Đang tìm địa chỉ...";
+      _isLoadingAddress = true;
+      _addressText = t.translate('searchingForAddress');
       _selectedLocation = latLng;
     });
 
     try {
-      List<Placemark> placemarks = await geocoding.placemarkFromCoordinates(
+      List<geocoding.Placemark> placemarks = await geocoding.placemarkFromCoordinates(
         latLng.latitude,
         latLng.longitude,
       );
 
+      if (!mounted) return;
+
       if (placemarks.isNotEmpty) {
-        if (!mounted) return;
         final place = placemarks.first;
         final address = [
           place.street,
           place.subLocality,
           place.locality,
+          place.administrativeArea,
           place.country,
         ].where((e) => e != null && e.isNotEmpty).join(', ');
 
-        setState(() {
-          _addressText = address;
-        });
+        _addressText = address.isNotEmpty ? address : t.translate('addressNotFound');
       } else {
-        if (!mounted) return;
-        setState(() {
-          _addressText = "Không tìm thấy địa chỉ cho vị trí này.";
-        });
+        _addressText = t.translate('addressNotFound');
       }
     } catch (e) {
-      if (!mounted) return;
-      setState(() {
-        _addressText = "Lỗi Geocoding: ${e.toString()}";
-      });
+      _addressText = t.translate('geocodingError').replaceAll('{error}', e.toString());
+    } finally {
+      if(mounted) {
+        setState(() => _isLoadingAddress = false);
+      }
     }
+  }
+
+  void _confirmSelection() {
+    Navigator.pop(context, {
+      'latitude': _selectedLocation.latitude,
+      'longitude': _selectedLocation.longitude,
+      'fullAddress': _addressText,
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Chọn Địa Chỉ Giao Hàng"),
+        title: Text(t.translate('chooseDeliveryLocation')),
         actions: [
           IconButton(
             icon: const Icon(Icons.my_location),
-            onPressed: _initialLocation == null ? null : _backToCurrentLocation,
-            tooltip: 'Quay lại vị trí hiện tại',
+            onPressed: _setInitialLocation,
+            tooltip: t.translate('backToCurrentLocation'),
           ),
         ],
       ),
@@ -120,14 +122,18 @@ class _MapPickerScreenState extends State<MapPickerScreen> {
             options: MapOptions(
               initialCenter: _selectedLocation,
               initialZoom: 15.0,
-              onTap: (tapPosition, latLng) {
-                _getAddressFromLatLng(latLng);
+              onTap: (tapPosition, latLng) => _getAddressFromLatLng(latLng),
+              onMapReady: () {
+                if (!_isInitialLocationSet) {
+                  _setInitialLocation();
+                  _isInitialLocationSet = true;
+                }
               },
             ),
             children: [
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.your_app_name.app',
+                userAgentPackageName: 'com.doro.gear',
               ),
               MarkerLayer(
                 markers: [
@@ -135,46 +141,41 @@ class _MapPickerScreenState extends State<MapPickerScreen> {
                     point: _selectedLocation,
                     width: 80,
                     height: 80,
-                    child: const Icon(
-                      Icons.location_on,
-                      color: Colors.red,
-                      size: 40,
-                    ),
+                    child: const Icon(Icons.location_on, color: Colors.red, size: 40),
                   ),
                 ],
               ),
             ],
           ),
-
           Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.all(16.0),
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Vị trí đã chọn:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(_addressText),
-                  const SizedBox(height: 8),
-                  Text("Tọa độ: ${_selectedLocation.latitude.toStringAsFixed(4)}, ${_selectedLocation.longitude.toStringAsFixed(4)}"),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context, {
-                        'latitude': _selectedLocation.latitude,
-                        'longitude': _selectedLocation.longitude,
-                        'fullAddress': _addressText, // Có thể cần phân tích chuỗi này chi tiết hơn
-                      });
-                    },
-                    child: const Text("Xác nhận Địa chỉ này"),
-                  ),
-                ],
+            bottom: 0, left: 0, right: 0,
+            child: Material(
+              elevation: 8.0,
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                color: Colors.white,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(t.translate('selectedLocation'), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    const SizedBox(height: 8),
+                    _isLoadingAddress
+                        ? const Center(child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(),
+                    ))
+                        : Text(_addressText, style: const TextStyle(fontSize: 14)),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: _isLoadingAddress ? null : _confirmSelection,
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: Text(t.translate('confirmThisAddress')),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

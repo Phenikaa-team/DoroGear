@@ -1,7 +1,9 @@
 import 'package:doro_gear/helpers/enums/category.dart';
+import 'package:doro_gear/localization/app_localizations.dart';
 import 'package:flutter/material.dart' hide SearchBar;
 
 import '../../constants/app_colors.dart';
+import '../../models/cart.dart';
 import '../../models/product.dart';
 import '../../models/shop_function.dart';
 import '../../services/product_service.dart';
@@ -25,40 +27,7 @@ class _HomePageState extends State<HomePage> {
   List<Product> _allProducts = [];
   bool _isLoading = true;
 
-  final List<ShopFunction> _shopFunctions = [
-    ShopFunction(
-      icon: Icons.flash_on,
-      label: 'Flash Sale',
-      color: Colors.orange,
-    ),
-    ShopFunction(
-      icon: Icons.local_shipping,
-      label: 'Miễn phí ship',
-      color: Colors.blue,
-    ),
-    ShopFunction(
-      icon: Icons.card_giftcard,
-      label: 'Voucher',
-      color: Colors.red,
-    ),
-    ShopFunction(
-      icon: Icons.category,
-      label: 'Danh mục',
-      color: AppColors.primaryColor,
-    ),
-    ShopFunction(icon: Icons.star, label: 'Top Deal', color: Colors.amber),
-    ShopFunction(
-      icon: Icons.local_offer,
-      label: 'Giảm giá',
-      color: Colors.purple,
-    ),
-    ShopFunction(
-      icon: Icons.new_releases,
-      label: 'Hàng mới',
-      color: Colors.green,
-    ),
-    ShopFunction(icon: Icons.more_horiz, label: 'Thêm', color: Colors.grey),
-  ];
+  List<ShopFunction> _shopFunctions = [];
 
   @override
   void initState() {
@@ -66,46 +35,61 @@ class _HomePageState extends State<HomePage> {
     _loadProducts();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initializeShopFunctions();
+  }
+
+  void _initializeShopFunctions() {
+    final t = AppLocalizations.of(context)!;
+    _shopFunctions = [
+      ShopFunction(icon: Icons.flash_on, label: t.translate('flashSale'), color: Colors.orange),
+      ShopFunction(icon: Icons.local_shipping, label: t.translate('freeShip'), color: Colors.blue),
+      ShopFunction(icon: Icons.card_giftcard, label: t.translate('vouchers'), color: Colors.red),
+      ShopFunction(icon: Icons.category, label: t.translate('categories'), color: AppColors.primaryColor),
+      ShopFunction(icon: Icons.star, label: t.translate('topDeals'), color: Colors.amber),
+      ShopFunction(icon: Icons.local_offer, label: t.translate('discounts'), color: Colors.purple),
+      ShopFunction(icon: Icons.new_releases, label: t.translate('newArrivals'), color: Colors.green),
+      ShopFunction(icon: Icons.more_horiz, label: t.translate('more'), color: Colors.grey),
+    ];
+  }
+
   Future<void> _loadProducts() async {
     try {
       final products = await ProductService.loadProducts();
-      setState(() {
-        _allProducts = products;
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _allProducts = products;
+          _isLoading = false;
+        });
+      }
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
       debugPrint('Error loading products: $e');
     }
   }
 
-  List<Product> _getProductsByCategory(ProductCategory category) {
-    return _allProducts.where((p) => p.category == category).toList();
-  }
+  List<Product> _getProductsByCategory(ProductCategory category) =>
+      _allProducts.where((p) => p.category == category).toList();
 
   List<Product> _getHotProducts() {
-    final sorted = List<Product>.from(_allProducts);
-    sorted.sort((a, b) => b.soldCount.compareTo(a.soldCount));
+    final sorted = List<Product>.from(_allProducts)
+      ..sort((a, b) => b.soldCount.compareTo(a.soldCount));
     return sorted.take(5).toList();
   }
 
   List<ProductCategory> _getAvailableCategories() {
-    final availableCategories = _allProducts
-        .map((p) => p.category)
-        .toSet()
-        .toList();
-
-    availableCategories.sort((a, b) => a.compareTo(b));
-
-    return availableCategories;
+    return _allProducts.map((p) => p.category).toSet().toList()
+      ..sort((a, b) => a.compareTo(b));
   }
 
   void _onBottomNavTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(() => _selectedIndex = index);
   }
 
   @override
@@ -113,7 +97,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: _buildAppBar(),
-      body: _isLoading ? _buildLoading() : _buildContent(),
+      body: _isLoading ? const Center(child: CircularProgressIndicator()) : _buildContent(),
       bottomNavigationBar: CustomBottomNavBar(
         selectedIndex: _selectedIndex,
         onTap: _onBottomNavTap,
@@ -122,45 +106,38 @@ class _HomePageState extends State<HomePage> {
   }
 
   PreferredSizeWidget _buildAppBar() {
+    final t = AppLocalizations.of(context)!;
     if (_selectedIndex == 4) {
       return AppBar(
         backgroundColor: AppColors.primaryColor,
         elevation: 0,
-        title: const Text('Tài Khoản', style: TextStyle(color: Colors.white)),
+        title: Text(t.translate('account'), style: const TextStyle(color: Colors.white)),
         centerTitle: true,
       );
     }
     return AppBar(
       backgroundColor: AppColors.primaryColor,
       elevation: 0,
-      title: const CustomSearchBar(),
-      actions: const [NotificationButton(), CartButton(itemCount: 0)],
-    );
-  }
-
-  Widget _buildLoading() {
-    return const Center(
-      child: CircularProgressIndicator(),
+      title: CustomSearchBar(hintText: t.translate('searchProductHint')),
+      actions: [const NotificationButton(), CartButton(itemCount: Cart.items.length)],
     );
   }
 
   Widget _buildContent() {
-    switch (_selectedIndex) {
-      case 0: // Home
-      case 1: // Mall
-      case 2: // QR Code
-      case 3: // Tin Nhắn
-        return _buildHomeBody();
-      case 4: // Tài Khoản
-        return const AccountPage();
-      default:
-        return _buildHomeBody();
-    }
+    final List<Widget> pages = [
+      _buildHomeBody(),
+      _buildHomeBody(),
+      _buildHomeBody(),
+      _buildHomeBody(),
+      const AccountPage(),
+    ];
+    return pages[_selectedIndex];
   }
 
   Widget _buildHomeBody() {
     final hotProducts = _getHotProducts();
     final categories = _getAvailableCategories();
+    final t = AppLocalizations.of(context)!;
 
     return SingleChildScrollView(
       child: Column(
@@ -169,12 +146,13 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 12),
           ShopFunctionsGrid(functions: _shopFunctions),
           const SizedBox(height: 12),
-
           if (hotProducts.isNotEmpty) ...[
-            HotProductsRow(products: hotProducts),
+            HotProductsRow(
+              hotProducts: hotProducts,
+              bestSellingProducts: hotProducts.reversed.toList(),
+            ),
             const SizedBox(height: 12),
           ],
-
           ...categories.map((category) {
             final products = _getProductsByCategory(category);
             if (products.isEmpty) return const SizedBox.shrink();
@@ -184,11 +162,46 @@ class _HomePageState extends State<HomePage> {
                 ProductGridSection(
                   title: category.displayName,
                   products: products,
+                  viewMoreText: t.translate('viewMore'),
                 ),
                 const SizedBox(height: 12),
               ],
             );
           }),
+        ],
+      ),
+    );
+  }
+}
+
+class HotProductsRow extends StatelessWidget {
+  final List<Product> hotProducts;
+  final List<Product> bestSellingProducts;
+
+  const HotProductsRow({
+    super.key,
+    required this.hotProducts,
+    required this.bestSellingProducts,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Column(
+        children: [
+          ProductSection(
+            title: t.translate('hotProducts'),
+            accentColor: Colors.red,
+            products: hotProducts,
+          ),
+          const SizedBox(height: 12),
+          ProductSection(
+            title: t.translate('bestSelling'),
+            accentColor: Colors.orange,
+            products: bestSellingProducts,
+          ),
         ],
       ),
     );
