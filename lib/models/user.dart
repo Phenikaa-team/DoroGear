@@ -1,17 +1,18 @@
+import '../helpers/enums/user_role.dart';
 import 'model_interfaces.dart';
 
 class User implements IModel {
   final String name;
   final String email;
   final String password;
-  final bool isAdmin;
+  final UserRole role;
   final String? phoneNumber;
 
   User({
     required this.name,
     required this.email,
     required this.password,
-    this.isAdmin = false,
+    this.role = UserRole.customer,
     this.phoneNumber,
   });
 
@@ -20,7 +21,7 @@ class User implements IModel {
       name: json['name'] as String,
       email: json['email'] as String,
       password: json['password'] as String,
-      isAdmin: json['isAdmin'] as bool? ?? false,
+      role: UserRole.fromString(json['role'] as String? ?? 'customer'),
       phoneNumber: json['phoneNumber'] as String?,
     );
   }
@@ -30,13 +31,13 @@ class User implements IModel {
     String? email,
     String? password,
     String? phoneNumber,
-    bool? isAdmin,
+    UserRole? role,
   }) {
     return User(
       name: name ?? this.name,
       email: email ?? this.email,
       password: password ?? this.password,
-      isAdmin: isAdmin ?? this.isAdmin,
+      role: role ?? this.role,
       phoneNumber: phoneNumber ?? this.phoneNumber,
     );
   }
@@ -46,7 +47,7 @@ class User implements IModel {
     'name': name,
     'email': email,
     'password': password,
-    'isAdmin': isAdmin,
+    'role': role.name,
     'phoneNumber': phoneNumber,
   };
 }

@@ -1,9 +1,13 @@
 import 'package:doro_gear/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_colors.dart';
+import '../../helpers/enums/user_role.dart';
+import '../../models/user.dart';
 import '../../services/user_service.dart';
-import '../admin/AdminPage.dart';
+import '../admin/admin_page.dart';
+import '../admin/employee/employee_page.dart';
 import '../home/home_page.dart';
 import 'signup_page.dart';
 
@@ -75,12 +79,25 @@ class _SignInPageState extends State<SignInPage> {
         ),
       );
 
-      if (UserService.isUserAdmin(user)) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const AdminPage()));
-      } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+      switch (user.role) {
+        case UserRole.admin:
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const AdminPage()),
+          );
+          break;
+        case UserRole.employee:
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const EmployeePage()),
+          );
+          break;
+        case UserRole.customer:
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+          break;
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -191,6 +208,7 @@ class _SignInPageState extends State<SignInPage> {
           _buildDivider(),
           const SizedBox(height: 24),
           _buildSocialSignInButtons(t),
+          _buildDebugClearButton(context),
         ],
       ),
     );
@@ -380,7 +398,7 @@ class _SignInPageState extends State<SignInPage> {
     return Row(
       children: [
         Expanded(child: Divider(color: Colors.grey[300], thickness: 1)),
-        
+
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: Text(
@@ -465,6 +483,46 @@ class _SignInPageState extends State<SignInPage> {
           ),
         ),
       ],
+    );
+  }
+
+  // DEV stuff 🤖
+  Widget _buildDebugClearButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: ElevatedButton.icon(
+        icon: const Icon(Icons.bug_report, size: 18),
+        label: const Text("CLEAN ALL ACCOUNT DATA"),
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.grey.shade600,
+        ),
+        onPressed: () async {
+          final confirm = await showDialog<bool>(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text("Xác nhận"),
+              content: const Text("Bạn có chắc muốn xóa tất cả dữ liệu người dùng đã lưu? Hành động này sẽ buộc app tạo lại tài khoản admin mặc định."),
+              actions: [
+                TextButton(onPressed: () => Navigator.pop(context, false), child: const Text("Hủy")),
+                TextButton(onPressed: () => Navigator.pop(context, true), child: const Text("Xóa", style: TextStyle(color: Colors.red))),
+              ],
+            ),
+          );
+
+          if (confirm == true && context.mounted) {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.remove('app_users');
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Đã xóa dữ liệu người dùng. Vui lòng khởi động lại ứng dụng."),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 

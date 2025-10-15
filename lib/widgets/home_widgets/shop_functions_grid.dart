@@ -25,13 +25,14 @@ class ShopFunctionsGrid extends StatelessWidget {
             ),
           ],
         ),
-        child: Column(
-          children: [
-            _buildRow(functions.sublist(0, 4)),
-            SizedBox(height: 16),
-            _buildRow(functions.sublist(4, 8)),
-          ],
-        ),
+        child: _buildRow(functions.sublist(0, 4)),
+        // child: Column(
+        //   children: [
+        //     _buildRow(functions.sublist(0, 4)),
+        //     SizedBox(height: 16),
+        //     _buildRow(functions.sublist(4, 8)),
+        //   ],
+        // ),
       ),
     );
   }

@@ -44,14 +44,15 @@ class _HomePageState extends State<HomePage> {
   void _initializeShopFunctions() {
     final t = AppLocalizations.of(context)!;
     _shopFunctions = [
-      ShopFunction(icon: Icons.flash_on, label: t.translate('flashSale'), color: Colors.orange),
-      ShopFunction(icon: Icons.local_shipping, label: t.translate('freeShip'), color: Colors.blue),
+      ShopFunction(icon: Icons.computer, label: t.translate('buildPC'), color: Colors.blueAccent),
       ShopFunction(icon: Icons.card_giftcard, label: t.translate('vouchers'), color: Colors.red),
       ShopFunction(icon: Icons.category, label: t.translate('categories'), color: AppColors.primaryColor),
       ShopFunction(icon: Icons.star, label: t.translate('topDeals'), color: Colors.amber),
-      ShopFunction(icon: Icons.local_offer, label: t.translate('discounts'), color: Colors.purple),
-      ShopFunction(icon: Icons.new_releases, label: t.translate('newArrivals'), color: Colors.green),
-      ShopFunction(icon: Icons.more_horiz, label: t.translate('more'), color: Colors.grey),
+      //ShopFunction(icon: Icons.flash_on, label: t.translate('flashSale'), color: Colors.orange),
+      //ShopFunction(icon: Icons.local_shipping, label: t.translate('freeShip'), color: Colors.blue),
+      //ShopFunction(icon: Icons.local_offer, label: t.translate('discounts'), color: Colors.purple),
+      //ShopFunction(icon: Icons.new_releases, label: t.translate('newArrivals'), color: Colors.green),
+      //ShopFunction(icon: Icons.more_horiz, label: t.translate('more'), color: Colors.grey),
     ];
   }
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../helpers/enums/user_role.dart';
 import '../models/user.dart';
 
 class UserService {
@@ -14,8 +15,53 @@ class UserService {
   static const String adminPassword = 'admin';
   static const String adminName = 'Doro Gear Admin';
 
+  static const String employeeEmail = 'employee@doro.com';
+  static const String employeePassword = 'employee';
+  static const String employeeName = 'Doro Gear Employee';
+
   static User? get currentUser => _currentUser;
   static bool get isGuest => _currentUser == null;
+  static List<User> get allUsers => _users.values.toList();
+
+  static Future<void> initialize() async {
+    if (_isInitialized) return;
+    await _loadUsers();
+
+    if (!_users.containsKey(adminEmail)) {
+      _users[adminEmail] = User(
+        name: adminName,
+        email: adminEmail,
+        password: adminPassword,
+        role: UserRole.admin,
+      );
+    }
+
+    if (!_users.containsKey(employeeEmail)) {
+      _users[employeeEmail] = User(
+        name: employeeName,
+        email: employeeEmail,
+        password: employeePassword,
+        role: UserRole.employee,
+      );
+    }
+
+    await _saveUsers();
+    _isInitialized = true;
+  }
+
+  static Future<void> _loadUsers() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userListString = prefs.getString(_userKey);
+
+    if (userListString != null) {
+      final List<dynamic> userListJson = json.decode(userListString);
+      _users.clear();
+      for (var json in userListJson) {
+        final user = User.fromJson(json);
+        _users[user.email.toLowerCase()] = user;
+      }
+    }
+  }
 
   static Future<void> _saveUsers() async {
     final prefs = await SharedPreferences.getInstance();
@@ -37,36 +83,9 @@ class UserService {
     return isRemoved;
   }
 
-  static Future<void> _loadUsers() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userListString = prefs.getString(_userKey);
-
-    if (userListString != null) {
-      final List<dynamic> userListJson = json.decode(userListString);
-      _users.clear();
-      for (var json in userListJson) {
-        final user = User.fromJson(json);
-        _users[user.email.toLowerCase()] = user;
-      }
-    }
-  }
-
-  static Future<void> initialize() async {
-    if (_isInitialized) return;
-
-    await _loadUsers();
-
-    if (!_users.containsKey(adminEmail)) {
-      _users[adminEmail] = User(
-        name: adminName,
-        email: adminEmail,
-        password: adminPassword,
-        isAdmin: true,
-      );
-    }
+  static Future<void> deleteUserByEmail(String email) async {
+    _users.remove(email.toLowerCase());
     await _saveUsers();
-
-    _isInitialized = true;
   }
 
   static bool isEmailRegistered(String email) {
@@ -78,23 +97,20 @@ class UserService {
     required String email,
     required String phoneNumber,
     required String password,
+    UserRole role = UserRole.customer,
   }) {
     final lowerEmail = email.toLowerCase();
-    if (isEmailRegistered(lowerEmail)) {
-      return false;
-    }
+    if (isEmailRegistered(lowerEmail)) return false;
 
     final newUser = User(
       name: name,
       email: lowerEmail,
       phoneNumber: phoneNumber,
       password: password,
-      isAdmin: false,
+      role: role,
     );
-
     _users[lowerEmail] = newUser;
     _saveUsers();
-
     return true;
   }
 
@@ -114,7 +130,7 @@ class UserService {
   }
 
   static bool isUserAdmin(User user) {
-    return user.isAdmin;
+    return user.role == UserRole.admin;
   }
 
   static Future<bool> updateUser({
@@ -122,6 +138,7 @@ class UserService {
     String? newName,
     String? newEmail,
     String? newPhoneNumber,
+    UserRole? role,
   }) async {
     final lowerOldEmail = oldEmail.toLowerCase();
     User? user = _users[lowerOldEmail];
@@ -142,6 +159,7 @@ class UserService {
       name: newName,
       email: targetEmail,
       phoneNumber: newPhoneNumber,
+      role: role,
     );
 
     _users[targetEmail] = updatedUser;

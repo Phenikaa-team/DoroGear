@@ -91,7 +91,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
           : _addresses.isEmpty
           ? _buildEmptyState(t)
           : ListView.builder(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 80), // Thêm padding dưới
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
         itemCount: _addresses.length,
         itemBuilder: (context, index) => _buildAddressCard(_addresses[index], t),
       ),

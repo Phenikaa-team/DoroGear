@@ -1,4 +1,5 @@
 import 'package:doro_gear/localization/app_localizations.dart';
+import 'package:doro_gear/screens/account/profile/about/about_app_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -133,10 +134,19 @@ class AccountPage extends StatelessWidget {
       title: t.translate('settingsAndSupport'),
       children: [
         _buildAccountItem(Icons.language, t.translate('language'), () => _showLanguagePicker(context)),
-        _buildAccountItem(Icons.notifications_none, 'Cài đặt thông báo', () {}),
-        _buildAccountItem(Icons.security, 'Thay đổi mật khẩu', () {}),
-        _buildAccountItem(Icons.help_outline, 'Trung tâm trợ giúp', () {}),
-        _buildAccountItem(Icons.info_outline, 'Về ứng dụng', () {}),
+        _buildAccountItem(Icons.notifications_none, t.translate('notificationSettings'), () {}),
+        _buildAccountItem(Icons.security, t.translate('changePassword'), () {}),
+        _buildAccountItem(Icons.help_outline, t.translate('helpCenter'), () {}),
+        _buildAccountItem(
+          Icons.info_outline,
+          t.translate('aboutApp'),
+              () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AboutAppPage()),
+            );
+          },
+        )
       ],
     );
   }
@@ -264,17 +274,18 @@ class AccountPage extends StatelessWidget {
   }
 
   Future<void> _deleteAccountAndNavigate(BuildContext context) async {
+    final t = AppLocalizations.of(context)!;
     final success = await UserService.deleteUser();
     if (!context.mounted) return;
 
     if (success) {
       _navigateToSignIn(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Tài khoản đã được xóa thành công.')),
+        SnackBar(content: Text(t.translate('accountDeletedSuccess'))),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Không thể xóa tài khoản. Vui lòng thử lại.')),
+        SnackBar(content: Text(t.translate('accountDeletionFailed'))),
       );
     }
   }

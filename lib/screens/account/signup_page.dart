@@ -137,34 +137,67 @@ class _SignUpPageState extends State<SignUpPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 20, offset: const Offset(0, 10))],
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.1),
+              blurRadius: 20,
+              offset: const Offset(0, 10))
+        ],
       ),
       child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(t.translate('createAccount'), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black87)),
+            Text(t.translate('createAccount'), style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87)),
             const SizedBox(height: 8),
-            Text(t.translate('fillInfoToSignUp'), style: TextStyle(fontSize: 14, color: Colors.grey[600], height: 1.5)),
+            Text(t.translate('fillInfoToSignUp'), style: TextStyle(
+                fontSize: 14, color: Colors.grey[600], height: 1.5)),
             const SizedBox(height: 32),
-            _buildTextField(t, controller: _nameController, label: t.translate('fullName'), hint: 'Enter your full name', validator: (v) {
-              if (v == null || v.trim().isEmpty) return t.translate('pleaseEnterName');
-              if (v.trim().length < 2) return t.translate('nameMinLength');
-              return null;
-            }),
+            _buildTextField(t, controller: _nameController,
+                label: t.translate('fullName'),
+                hint: t.translate('enterYourFullName'),
+                validator: (v) {
+                  if (v == null || v.trim().isEmpty) {
+                    return t.translate('pleaseEnterName');
+                  }
+                  if (v.trim().length < 2) {
+                    return t.translate('nameMinLength');
+                  }
+                  return null;
+                }),
             const SizedBox(height: 20),
-            _buildTextField(t, controller: _emailController, label: t.translate('emailAddress'), hint: 'Enter your email', keyboardType: TextInputType.emailAddress, validator: (v) {
-              if (v == null || v.trim().isEmpty) return t.translate('pleaseEnterEmail');
-              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(v)) return t.translate('emailInvalid');
-              return null;
-            }),
+            _buildTextField(t, controller: _emailController,
+                label: t.translate('emailAddress'),
+                hint: t.translate('enterYourEmail'),
+                keyboardType: TextInputType.emailAddress,
+                validator: (v) {
+                  if (v == null || v.trim().isEmpty) {
+                    return t.translate('pleaseEnterEmail');
+                  }
+                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(v)) {
+                    return t.translate('emailInvalid');
+                  }
+                  return null;
+                }),
             const SizedBox(height: 20),
-            _buildTextField(t, controller: _phoneController, label: t.translate('phoneNumber'), hint: 'Enter your phone number', keyboardType: TextInputType.phone, inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(11)], validator: (v) {
-              if (v == null || v.trim().isEmpty) return t.translate('pleaseEnterPhone');
-              if (v.length < 10) return t.translate('phoneMinLength');
-              return null;
-            }),
+            _buildTextField(t, controller: _phoneController,
+                label: t.translate('phoneNumber'),
+                hint: t.translate('enterYourPhoneNumber'),
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(11)
+                ],
+                validator: (v) {
+                  if (v == null || v.trim().isEmpty) {
+                    return t.translate('pleaseEnterPhone');
+                  }
+                  if (v.length < 10) return t.translate('phoneMinLength');
+                  return null;
+                }),
             const SizedBox(height: 20),
             _buildPasswordField(t),
             const SizedBox(height: 20),
@@ -223,7 +256,7 @@ class _SignUpPageState extends State<SignUpPage> {
             return null;
           },
           decoration: InputDecoration(
-            hintText: 'Enter your password',
+            hintText: t.translate('enterYourPassword'),
             hintStyle: TextStyle(color: Colors.grey[400]),
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -257,7 +290,7 @@ class _SignUpPageState extends State<SignUpPage> {
             return null;
           },
           decoration: InputDecoration(
-            hintText: 'Confirm your password',
+            hintText: t.translate('confirmYourPassword'),
             hintStyle: TextStyle(color: Colors.grey[400]),
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
