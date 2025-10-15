@@ -14,6 +14,7 @@ import '../../widgets/shared/appbar_actions.dart';
 import '../../widgets/shared/custom_bottom_nav_bar.dart';
 import '../../widgets/shared/search_bar.dart';
 import '../account/account_page.dart';
+import '../search/search_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -118,8 +119,19 @@ class _HomePageState extends State<HomePage> {
     }
     return AppBar(
       backgroundColor: AppColors.primaryColor,
+      foregroundColor: Colors.white,
       elevation: 0,
-      title: CustomSearchBar(hintText: t.translate('searchProductHint')),
+      title: FakeSearchBar(
+        hintText: t.translate('searchProductHint'),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SearchPage(allProducts: _allProducts),
+            ),
+          );
+        },
+      ),
       actions: [const NotificationButton(), CartButton(itemCount: Cart.items.length)],
     );
   }

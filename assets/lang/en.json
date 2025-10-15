@@ -137,6 +137,10 @@
   "roleLabel": "Role",
   "saveAddress": "Save Address",
   "saveChanges": "Save Changes",
+  "search": "Search",
+  "searchHint": "Search products, brands...",
+  "searchResultsFor": "Results for '{query}'",
+  "noResultsFound": "No products found.",
   "searchProductHint": "Search for products...",
   "searchingForAddress": "Searching for address...",
   "selectedLocation": "Selected Location:",
@@ -166,5 +170,8 @@
   "voucherBannerExample": "Extra ₫269,000 off for gold members",
   "vouchers": "Vouchers",
   "warranty": "Warranty",
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "recentSearches": "Recent Searches",
+  "clearHistory": "Clear History",
+  "resultsFound": "{count} results found"
 }

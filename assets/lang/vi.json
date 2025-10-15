@@ -137,6 +137,10 @@
   "roleLabel": "Vai trò",
   "saveAddress": "Lưu địa chỉ",
   "saveChanges": "Lưu thay đổi",
+  "search": "Tìm kiếm",
+  "searchHint": "Tìm kiếm sản phẩm, thương hiệu...",
+  "searchResultsFor": "Kết quả cho '{query}'",
+  "noResultsFound": "Không tìm thấy sản phẩm nào.",
   "searchProductHint": "Tìm kiếm sản phẩm...",
   "searchingForAddress": "Đang tìm địa chỉ...",
   "selectedLocation": "Vị trí đã chọn:",
@@ -166,5 +170,8 @@
   "voucherBannerExample": "Giảm thêm 269.000 đ cho hội viên vàng",
   "vouchers": "Voucher",
   "warranty": "Bảo hành",
-  "welcome": "Chào mừng"
+  "welcome": "Chào mừng",
+  "recentSearches": "Tìm kiếm gần đây",
+  "clearHistory": "Xóa lịch sử",
+  "resultsFound": "Tìm thấy {count} kết quả"
 }

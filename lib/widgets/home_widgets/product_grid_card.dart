@@ -263,9 +263,9 @@ class ProductGridCard extends StatelessWidget {
         Container(
           height: 130,
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
           ),
           child: product.image != null
               ? ClipRRect(
@@ -290,7 +290,7 @@ class ProductGridCard extends StatelessWidget {
             ),
             child: Text(
               t.translate('hot'),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,
                 fontWeight: FontWeight.bold,
@@ -304,22 +304,24 @@ class ProductGridCard extends StatelessWidget {
   }
 
   Widget _buildPrices() {
-    final discount =
-    ((product.originalPrice - product.price) / product.originalPrice * 100)
-        .toInt();
+    final discount = ((product.originalPrice - product.price) / product.originalPrice * 100).toInt();
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          PriceFormatter.format(product.price.toDouble()),
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.bold,
-            color: Colors.red,
-            height: 1.0,
+        Expanded(
+          child: Text(
+            PriceFormatter.format(product.price.toDouble()),
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: Colors.red,
+              height: 1.0,
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
         ),
-        const SizedBox(width: 2),
+        const SizedBox(width: 4),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -387,7 +389,6 @@ class ProductGridCard extends StatelessWidget {
       ],
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
