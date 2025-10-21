@@ -1,7 +1,7 @@
 import 'package:doro_gear/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-import '../base_dashboard_page.dart';
+import '../widgets/dashboard_base.dart';
 import '../widgets/feature_card.dart';
 
 class EmployeePage extends StatelessWidget {

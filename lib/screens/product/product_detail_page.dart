@@ -8,6 +8,7 @@ import '../../models/product.dart';
 import '../../services/user_service.dart';
 import '../../widgets/shared/appbar_actions.dart';
 import '../account/signin_page.dart';
+import '../checkout/checkout_page.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Product product;
@@ -94,9 +95,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       _showLoginPrompt();
       return;
     }
-    final t = AppLocalizations.of(context)!;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(t.translate('buyNowAction'))),
+    // final t = AppLocalizations.of(context)!;
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(content: Text(t.translate('buyNowAction'))),
+    // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CheckoutPage(
+          product: widget.product,
+          quantity: _quantity,
+        ),
+      ),
     );
   }
 

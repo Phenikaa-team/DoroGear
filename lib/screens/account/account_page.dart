@@ -7,7 +7,7 @@ import '../../constants/app_colors.dart';
 import '../../providers/locale_provider.dart';
 import '../../services/user_service.dart';
 import '../account/signin_page.dart';
-import 'profile/addresser/delivery_address_page.dart';
+import '../address/delivery_address_page.dart';
 import 'profile/edit_profile_page.dart';
 
 class AccountPage extends StatelessWidget {

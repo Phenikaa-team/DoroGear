@@ -143,6 +143,8 @@
   "noResultsFound": "Không tìm thấy sản phẩm nào.",
   "searchProductHint": "Tìm kiếm sản phẩm...",
   "searchingForAddress": "Đang tìm địa chỉ...",
+  "searchCustomerHint": "Tìm khách hàng...",
+  "searchStaffHint": "Tìm nhân viên...",
   "selectedLocation": "Vị trí đã chọn:",
   "selectLocationPrompt": "Vui lòng chọn vị trí trên bản đồ.",
   "setDefault": "Đặt làm mặc định",

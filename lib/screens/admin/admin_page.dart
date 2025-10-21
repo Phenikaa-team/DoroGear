@@ -2,7 +2,8 @@ import 'package:doro_gear/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/app_colors.dart';
-import 'base_dashboard_page.dart';
+import 'customer/customer_management_page.dart';
+import 'widgets/dashboard_base.dart';
 import 'employee/employee_management_page.dart';
 import 'widgets/feature_card.dart';
 
@@ -36,7 +37,12 @@ class AdminPage extends StatelessWidget {
           title: t.translate('customerManagement'),
           description: t.translate('customerManagementDesc'),
           color: Colors.green,
-          onTap: () { /* TODO: Navigate to Customer Management Page */ },
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CustomerManagementPage()),
+            );
+          },
         ),
         FeatureCard(
           icon: Icons.receipt_long,

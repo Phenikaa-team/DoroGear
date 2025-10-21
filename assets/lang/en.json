@@ -143,6 +143,8 @@
   "noResultsFound": "No products found.",
   "searchProductHint": "Search for products...",
   "searchingForAddress": "Searching for address...",
+  "searchCustomerHint": "Search for customers...",
+  "searchStaffHint": "Search for staff...",
   "selectedLocation": "Selected Location:",
   "selectLocationPrompt": "Please select a location on the map.",
   "setDefault": "Set as Default",

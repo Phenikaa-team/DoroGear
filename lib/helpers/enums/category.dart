@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 enum ProductCategory {
   cpu(1, 'CPU - Vi xử lý'),
   mainboard(2, 'Mainboard - Bo mạch chủ'),

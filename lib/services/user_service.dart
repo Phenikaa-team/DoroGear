@@ -139,6 +139,7 @@ class UserService {
     String? newEmail,
     String? newPhoneNumber,
     UserRole? role,
+    bool isBanned = false
   }) async {
     final lowerOldEmail = oldEmail.toLowerCase();
     User? user = _users[lowerOldEmail];
@@ -160,6 +161,7 @@ class UserService {
       email: targetEmail,
       phoneNumber: newPhoneNumber,
       role: role,
+      isBanned: isBanned
     );
 
     _users[targetEmail] = updatedUser;

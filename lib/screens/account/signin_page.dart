@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_colors.dart';
 import '../../helpers/enums/user_role.dart';
-import '../../models/user.dart';
 import '../../services/user_service.dart';
 import '../admin/admin_page.dart';
 import '../admin/employee/employee_page.dart';
@@ -72,6 +71,15 @@ class _SignInPageState extends State<SignInPage> {
     final user = UserService.signIn(email, password);
 
     if (user != null) {
+      if (user.isBanned) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(t.translate('accountBannedError')),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${t.translate('signedInAs')} ${user.name}!'),

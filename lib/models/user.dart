@@ -7,6 +7,7 @@ class User implements IModel {
   final String password;
   final UserRole role;
   final String? phoneNumber;
+  final bool isBanned;
 
   User({
     required this.name,
@@ -14,6 +15,7 @@ class User implements IModel {
     required this.password,
     this.role = UserRole.customer,
     this.phoneNumber,
+    this.isBanned = false,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class User implements IModel {
       password: json['password'] as String,
       role: UserRole.fromString(json['role'] as String? ?? 'customer'),
       phoneNumber: json['phoneNumber'] as String?,
+      isBanned: json['isBanned'] as bool? ?? false,
     );
   }
 
@@ -32,6 +35,7 @@ class User implements IModel {
     String? password,
     String? phoneNumber,
     UserRole? role,
+    bool? isBanned,
   }) {
     return User(
       name: name ?? this.name,
@@ -39,6 +43,7 @@ class User implements IModel {
       password: password ?? this.password,
       role: role ?? this.role,
       phoneNumber: phoneNumber ?? this.phoneNumber,
+      isBanned: isBanned ?? this.isBanned,
     );
   }
 
@@ -49,5 +54,6 @@ class User implements IModel {
     'password': password,
     'role': role.name,
     'phoneNumber': phoneNumber,
+    'isBanned': isBanned,
   };
 }

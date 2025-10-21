@@ -1,8 +1,8 @@
 import 'package:doro_gear/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-import '../../services/user_service.dart';
-import '../account/signin_page.dart';
+import '../../../services/user_service.dart';
+import '../../account/signin_page.dart';
 
 class BaseDashboardPage extends StatelessWidget {
   final String title;

@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: AppColors.primaryColor,
       foregroundColor: Colors.white,
       elevation: 0,
-      title: FakeSearchBar(
+      title: CustomSearchBar(
         hintText: t.translate('searchProductHint'),
         onTap: () {
           Navigator.push(

@@ -39,9 +39,9 @@ class AddressService {
     return _allAddresses.where((addr) => addr.userId == userId).toList();
   }
 
-  static Future<void> addAddress(DeliveryAddress newAddress) async {
+  static Future<DeliveryAddress> addAddress(DeliveryAddress newAddress) async {
     final userId = UserService.currentUser?.email;
-    if (userId == null) return;
+    if (userId == null) throw Exception("User not logged in");
 
     DeliveryAddress addressToSave = newAddress.copyWith(
       id: _uuid.v4(),
@@ -56,6 +56,8 @@ class AddressService {
 
     _allAddresses.add(addressToSave);
     await _saveAddresses();
+
+    return addressToSave;
   }
 
   static Future<bool> updateAddress(DeliveryAddress updatedAddress) async {
@@ -73,7 +75,7 @@ class AddressService {
 
   static Future<bool> deleteAddress(String addressId) async {
     final initialLength = _allAddresses.length;
-    final deletedAddress = _allAddresses.firstWhere((addr) => addr.id == addressId);
+    //final deletedAddress = _allAddresses.firstWhere((addr) => addr.id == addressId);
 
     _allAddresses.removeWhere((addr) => addr.id == addressId);
 

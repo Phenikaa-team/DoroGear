@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../../../../constants/app_colors.dart';
-import '../../../../localization/app_localizations.dart';
-import '../../../../models/user.dart';
-import '../../../../services/address_service.dart';
-import '../../../../services/user_service.dart';
+import '../../constants/app_colors.dart';
+import '../../localization/app_localizations.dart';
+import '../../models/user.dart';
+import '../../services/address_service.dart';
+import '../../services/user_service.dart';
 import 'map_picker_screen.dart';
 
 class AddEditAddressPage extends StatefulWidget {
@@ -176,7 +176,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                 controller: _addressController,
                 label: t.translate('deliveryAddress'),
                 icon: Icons.map_outlined,
-                readOnly: true,
+                //readOnly: true,
                 validator: (value) => (value?.trim().isEmpty ?? true) ? t.translate('addressRequired') : null,
               ),
               const SizedBox(height: 20),
