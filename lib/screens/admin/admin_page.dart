@@ -2,6 +2,7 @@ import 'package:doro_gear/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/app_colors.dart';
+import '../product/product_manager_page.dart';
 import 'customer/customer_management_page.dart';
 import 'widgets/dashboard_base.dart';
 import 'employee/employee_management_page.dart';
@@ -23,7 +24,12 @@ class AdminPage extends StatelessWidget {
           title: t.translate('productManagement'),
           description: t.translate('productManagementDesc'),
           color: Colors.blueAccent,
-          onTap: () { /* TODO: Navigate to Product Management Page */ },
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProductManagementPage()),
+            );
+          },
         ),
         FeatureCard(
           icon: Icons.store,

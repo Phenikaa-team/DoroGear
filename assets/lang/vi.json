@@ -175,5 +175,17 @@
   "welcome": "Chào mừng",
   "recentSearches": "Tìm kiếm gần đây",
   "clearHistory": "Xóa lịch sử",
-  "resultsFound": "Tìm thấy {count} kết quả"
+  "resultsFound": "Tìm thấy {count} kết quả",
+  "searchProduct": "Tìm kiếm sản phẩm...",
+  "all": "Tất cả",
+  "noProductsFound": "Không tìm thấy sản phẩm",
+  "addProduct": "Thêm sản phẩm",
+  "editProduct": "Sửa sản phẩm",
+  "confirmDelete": "Xác nhận xóa",
+  "deleteProductConfirm": "Bạn có chắc muốn xóa",
+  "productDeleted": "Đã xóa sản phẩm",
+  "productAdded": "Đã thêm sản phẩm thành công",
+  "productUpdated": "Đã cập nhật sản phẩm",
+  "productName": "Tên sản phẩm",
+  "updateProduct": "Cập nhật sản phẩm"
 }

@@ -175,5 +175,17 @@
   "welcome": "Welcome",
   "recentSearches": "Recent Searches",
   "clearHistory": "Clear History",
-  "resultsFound": "{count} results found"
+  "resultsFound": "{count} results found",
+  "searchProduct": "Search for products...",
+  "all": "All",
+  "noProductsFound": "No products found",
+  "addProduct": "Add products",
+  "editProduct": "Repair products",
+  "confirmDelete": "Confirm deletion",
+  "deleteProductConfirm": "Are you sure you want to delete?",
+  "productDeleted": "Product removed",
+  "productAdded": "Product added successfully",
+  "productUpdated": "Product updated",
+  "productName": "Product name",
+  "updateProduct": "Product updates"
 }
