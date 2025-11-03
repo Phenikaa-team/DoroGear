@@ -314,7 +314,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ),
           const Divider(height: 16),
           ...widget.product.specs.entries.map((entry) =>
-              _buildSpecRow(entry.key, entry.value)).toList(),
+              _buildSpecRow(entry.key, entry.value)),
         ],
       ),
     );

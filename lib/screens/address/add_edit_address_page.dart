@@ -244,7 +244,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
             height: 100,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.primaryColor.withOpacity(0.5)),
+              border: Border.all(color: AppColors.primaryColor.withValues(alpha: 0.5)),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(

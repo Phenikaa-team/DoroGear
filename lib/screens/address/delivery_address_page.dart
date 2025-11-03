@@ -148,7 +148,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
             borderRadius: BorderRadius.circular(12),
             side: widget.isSelecting
                 ? BorderSide(
-                color: AppColors.primaryColor.withOpacity(0.5), width: 1)
+                color: AppColors.primaryColor.withValues(alpha: 0.5), width: 1)
                 : BorderSide.none
         ),
         child: Padding(
@@ -171,7 +171,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppColors.primaryColor.withOpacity(0.1),
+                        color: AppColors.primaryColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4),
                         border: Border.all(color: AppColors.primaryColor),
                       ),

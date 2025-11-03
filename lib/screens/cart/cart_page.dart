@@ -142,7 +142,7 @@ class _CartPageState extends State<CartPage> {
       );
       return;
     }
-    final result = await Navigator.push(
+    final _ = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => CheckoutPage.fromCart(

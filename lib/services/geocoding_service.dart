@@ -192,7 +192,7 @@ class GeocodingService {
       }
       return [];
     } catch (e) {
-      print('Search location failed: $e');
+      debugPrint('Search location failed: $e');
       return [];
     }
   }

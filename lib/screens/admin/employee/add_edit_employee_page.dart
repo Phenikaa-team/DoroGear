@@ -119,7 +119,7 @@ class _AddEditStaffPageState extends State<AddEditStaffPage> {
                 ),
               if (!_isEditMode) const SizedBox(height: 16),
               DropdownButtonFormField<UserRole>(
-                value: _selectedRole,
+                initialValue: _selectedRole,
                 decoration: InputDecoration(labelText: t.translate('roleLabel'), border: const OutlineInputBorder()),
                 items: UserRole.values
                     .where((role) => role != UserRole.customer)
