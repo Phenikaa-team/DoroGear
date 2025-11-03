@@ -123,25 +123,26 @@ class _HomePageState extends State<HomePage> {
       elevation: 0,
       title: CustomSearchBar(
         hintText: t.translate('searchProductHint'),
-        onTap: () {
-          Navigator.push(
+        onTap: () async {
+          await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => SearchPage(allProducts: _allProducts),
             ),
           );
+          setState(() {});
         },
       ),
-      actions: [const NotificationButton(), CartButton(itemCount: Cart.items.length)],
+      actions: [const NotificationButton(), CartButton(itemCount: Cart.totalItemCount)],
     );
   }
 
   Widget _buildContent() {
     final List<Widget> pages = [
       _buildHomeBody(),
-      _buildHomeBody(),
-      _buildHomeBody(),
-      _buildHomeBody(),
+      _buildHomeBody(), // PlaceHolder
+      _buildHomeBody(), // PlaceHolder
+      _buildHomeBody(), // PlaceHolder
       const AccountPage(),
     ];
     return pages[_selectedIndex];

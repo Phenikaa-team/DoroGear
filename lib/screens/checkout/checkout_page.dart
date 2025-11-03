@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../helpers/enums/payment_method.dart';
+import '../../models/cart.dart';
+import '../../models/cart_item.dart';
 import '../../models/delivery_address.dart';
 import '../../models/product.dart';
 import '../../helpers/formatter.dart';
@@ -9,14 +11,20 @@ import '../../services/address_service.dart';
 import '../address/delivery_address_page.dart';
 
 class CheckoutPage extends StatefulWidget {
-  final Product product;
-  final int quantity;
+  final List<CartItem> itemsToCheckout;
 
-  const CheckoutPage({
+  const CheckoutPage.fromCart({
     super.key,
-    required this.product,
-    required this.quantity,
+    required this.itemsToCheckout,
   });
+
+  factory CheckoutPage.fromBuyNow({
+    required Product product,
+    required int quantity,
+  }) {
+    final tempItem = CartItem(product: product, quantity: quantity, isSelected: true);
+    return CheckoutPage.fromCart(itemsToCheckout: [tempItem]);
+  }
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -29,10 +37,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
   DeliveryAddress? _selectedAddress;
   bool _isLoadingAddress = true;
 
+  late int _subtotal;
+
   @override
   void initState() {
     super.initState();
     _loadUserAddress();
+
+    _subtotal = widget.itemsToCheckout.fold(0, (sum, item) {
+      return sum + (item.product.price * item.quantity);
+    });
   }
 
   Future<void> _loadUserAddress() async {
@@ -80,29 +94,23 @@ class _CheckoutPageState extends State<CheckoutPage> {
   void _placeOrder() {
     if (_selectedAddress == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Vui lòng chọn địa chỉ giao hàng trước khi đặt hàng.')),
+        const SnackBar(content: Text('Vui lòng chọn địa chỉ giao hàng.')),
       );
       return;
     }
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        // final t = AppLocalizations.of(context)!;
         return AlertDialog(
           title: const Text('Đặt hàng thành công'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Cảm ơn bạn đã mua hàng!'),
-                Text('Đơn hàng của bạn sẽ được giao đến:'),
-                Text(_selectedAddress!.fullAddress, style: const TextStyle(fontWeight: FontWeight.bold)),
-              ],
-            ),
-          ),
+          content: Text('Đơn hàng của bạn đã được xác nhận.'),
           actions: <Widget>[
             TextButton(
               child: const Text('OK'),
               onPressed: () {
+                Cart.clearSelected();
+
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
@@ -116,13 +124,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     // final t = AppLocalizations.of(context)!;
-    final subtotal = widget.product.price * widget.quantity;
-    final total = subtotal + _shippingFee;
+    final total = _subtotal + _shippingFee;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        title: const Text('Thanh toán'), // t.translate('checkout')
+        title: const Text('Thanh toán'),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
       ),
@@ -135,16 +142,76 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 children: [
                   _buildAddressSection(),
                   const SizedBox(height: 8),
-                  _buildProductSummary(),
+                  _buildProductList(),
                   const SizedBox(height: 8),
                   _buildPaymentMethodSection(),
                   const SizedBox(height: 8),
-                  _buildOrderTotalSection(subtotal, total),
+                  _buildOrderTotalSection(_subtotal, total),
                 ],
               ),
             ),
           ),
           _buildBottomAction(total),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductList() {
+    return Container(
+      color: Colors.white,
+      child: ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: widget.itemsToCheckout.length,
+        itemBuilder: (context, index) {
+          final item = widget.itemsToCheckout[index];
+          return _buildProductSummary(item);
+        },
+        separatorBuilder: (context, index) => const Divider(height: 1, indent: 12, endIndent: 12),
+      ),
+    );
+  }
+
+  Widget _buildProductSummary(CartItem item) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      color: Colors.white,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.network(
+            item.product.image ?? 'https://via.placeholder.com/100',
+            width: 80,
+            height: 80,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) =>
+            const SizedBox(width: 80, height: 80, child: Icon(Icons.broken_image)),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.product.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 15),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Số lượng: ${item.quantity}',
+                  style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          Text(
+            PriceFormatter.format(item.product.price.toDouble()),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          ),
         ],
       ),
     );
@@ -169,7 +236,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
             const SizedBox(height: 8),
             const Text(
               'Vui lòng chọn hoặc thêm địa chỉ giao hàng',
-              // t.translate('pleaseAddAddress')
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
           ],
@@ -185,7 +251,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Địa chỉ nhận hàng', // t.translate('shippingAddress')
+                  'Địa chỉ nhận hàng',
                   style: TextStyle(color: Colors.grey[600], fontSize: 13),
                 ),
                 const SizedBox(height: 4),
@@ -194,7 +260,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '${_selectedAddress!.details}, ${_selectedAddress!.fullAddress}',
+                  '${_selectedAddress!.details.isNotEmpty ? "${_selectedAddress!.details}, " : ""}${_selectedAddress!.fullAddress}',
                   style: const TextStyle(fontSize: 14),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -206,56 +272,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ],
       );
     }
+
     return InkWell(
       onTap: _navigateToAddressSelection,
       child: Container(
         padding: const EdgeInsets.all(12),
         color: Colors.white,
         child: content,
-      ),
-    );
-  }
-
-  Widget _buildProductSummary() {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      color: Colors.white,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(
-            widget.product.image ?? 'https://via.placeholder.com/100',
-            width: 80,
-            height: 80,
-            fit: BoxFit.contain,
-            errorBuilder: (context, error, stackTrace) =>
-            const SizedBox(width: 80, height: 80, child: Icon(Icons.broken_image)),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.product.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 15),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Số lượng: ${widget.quantity}', // t.translate('quantity')
-                  style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 12),
-          Text(
-            PriceFormatter.format(widget.product.price.toDouble()),
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-          ),
-        ],
       ),
     );
   }

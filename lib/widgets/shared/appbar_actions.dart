@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../screens/cart/cart_page.dart';
+
 class NotificationButton extends StatelessWidget {
   const NotificationButton({super.key});
 
@@ -23,7 +25,12 @@ class CartButton extends StatelessWidget {
       children: [
         IconButton(
           icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CartPage()),
+            );
+          },
         ),
         if (itemCount > 0)
           Positioned(

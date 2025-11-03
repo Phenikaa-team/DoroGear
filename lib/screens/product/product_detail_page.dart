@@ -21,6 +21,46 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   int _quantity = 1;
 
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      appBar: AppBar(
+        title: Text(widget.product.name, style: const TextStyle(fontSize: 16)),
+        backgroundColor: AppColors.primaryColor,
+        foregroundColor: Colors.white,
+        actions: [const NotificationButton(), CartButton(itemCount: Cart.totalItemCount)],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildProductImage(context),
+                  const SizedBox(height: 8),
+                  _buildProductInfo(t),
+                  const SizedBox(height: 12),
+                  _buildGeneralDetails(t),
+                  const SizedBox(height: 8),
+                  _buildQuantitySelector(t),
+                  const SizedBox(height: 8),
+                  _buildSpecsSection(t),
+                  const SizedBox(height: 8),
+                  _buildDescriptionSection(t),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
+          _buildBottomActions(t),
+        ],
+      ),
+    );
+  }
+
   void _incrementQuantity() {
     if (_quantity < widget.product.stock) {
       setState(() => _quantity++);
@@ -75,9 +115,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       _showLoginPrompt();
       return;
     }
-    for (int i = 0; i < _quantity; i++) {
-      Cart.add(widget.product);
-    }
+
+    Cart.add(widget.product, _quantity);
     setState(() {});
 
     final t = AppLocalizations.of(context)!;
@@ -102,7 +141,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CheckoutPage(
+        builder: (context) => CheckoutPage.fromBuyNow(
           product: widget.product,
           quantity: _quantity,
         ),
@@ -118,46 +157,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     final t = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(t.translate('chatAction'))),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context)!;
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        title: Text(widget.product.name, style: const TextStyle(fontSize: 16)),
-        backgroundColor: AppColors.primaryColor,
-        foregroundColor: Colors.white,
-        actions: [const NotificationButton(), CartButton(itemCount: Cart.items.length)],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildProductImage(context),
-                  const SizedBox(height: 8),
-                  _buildProductInfo(t),
-                  const SizedBox(height: 12),
-                  _buildGeneralDetails(t),
-                  const SizedBox(height: 8),
-                  _buildQuantitySelector(t),
-                  const SizedBox(height: 8),
-                  _buildSpecsSection(t),
-                  const SizedBox(height: 8),
-                  _buildDescriptionSection(t),
-                  const SizedBox(height: 20),
-                ],
-              ),
-            ),
-          ),
-          _buildBottomActions(t),
-        ],
-      ),
     );
   }
 
